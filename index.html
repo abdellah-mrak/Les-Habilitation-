@@ -130,7 +130,7 @@
 
     <script>
         const CSV_FILE_URL_1 = 'https://docs.google.com/spreadsheets/d/1oeiUtIr4kcJOQh5IrIijF2HpmoRth9Wpm9dF_GWu_Mo/pub?gid=0&single=true&output=csv'; // URL du CSV du fichier 1
-        const CSV_FILE_URL_2 = 'https://docs.google.com/spreadsheets/d/1REHiTHenupidIpFb3nBsm64k9pfztRKiVNGofE-9U6Y/pub?output=csv'; // URL du CSV du fichier 2
+        const CSV_FILE_URL_2 = 'https://docs.google.com/spreadsheets/d/1REHiTHenupidIpFb3nBsm64k9pfztRKiVNGofE-9U6Y/pub?gid=0&single=true&output=csv'; // URL du CSV du fichier 2
 
         async function fetchCSV(url) {
             const response = await fetch(url);
@@ -176,7 +176,7 @@
         });
 
         document.querySelector('.menu a[data-title="Accueil"]').click();
-
     </script>
 </body>
 </html>
+
