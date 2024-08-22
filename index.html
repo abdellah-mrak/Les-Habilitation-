@@ -136,6 +136,7 @@
             const response = await fetch(url);
             const text = await response.text();
             const rows = text.split('\n').map(row => row.split(','));
+            console.log("Fetched data:", rows); // إضافة هذا السطر للتحقق من البيانات المسترجعة
             return rows;
         }
 
@@ -148,23 +149,19 @@
                 document.title = title;
                 document.getElementById('tableHeader').innerText = header;
 
-                // Changer la couleur de fond pour l'élément actif
                 document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
                 this.classList.add('active');
 
-                // Récupérer les données des fichiers CSV
                 const file1Data = await fetchCSV(CSV_FILE_URL_1);
                 const file2Data = await fetchCSV(CSV_FILE_URL_2);
 
-                // Mettre à jour le contenu du tableau en fonction du lien cliqué
                 const tableBody = document.getElementById('tableBody');
-                tableBody.innerHTML = ''; // Effacer le contenu du tableau
+                tableBody.innerHTML = '';
 
-                // Supposer que le fichier file1 contient des données que l'on recherche
-                const searchName = this.getAttribute('data-header'); // Nom de l'onglet sélectionné
-
-                // Trouver les lignes correspondant au titre sélectionné dans le fichier 2
+                const searchName = this.getAttribute('data-header');
                 const matchingRows = file2Data.filter(row => row[0] === searchName);
+
+                console.log("Matching rows:", matchingRows); // إضافة هذا السطر للتحقق من الصفوف المطابقة
 
                 matchingRows.forEach(row => {
                     const tr = document.createElement('tr');
@@ -178,9 +175,8 @@
             });
         });
 
-        // Définir "Accueil" comme élément par défaut
         document.querySelector('.menu a[data-title="Accueil"]').click();
+
     </script>
 </body>
 </html>
-
