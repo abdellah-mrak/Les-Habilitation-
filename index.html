@@ -129,9 +129,19 @@
     </div>
 
     <script>
-        // بيانات المثال
+        // روابط CSV من Google Sheets
+        const CSV_FILE_URL_1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQi8B9v5CEHkVi9l2E7L1slEn40pl2TjDK7Tga8Tg7oXsz6FgKJ2q_cy2iKhkIjaK6i5IRK7sfuD9iJ/pub?gid=0&single=true&output=csv'; // رابط CSV من file1
+        const CSV_FILE_URL_2 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQi8B9v5CEHkVi9l2E7L1slEn40pl2TjDK7Tga8Tg7oXsz6FgKJ2q_cy2iKhkIjaK6i5IRK7sfuD9iJ/pub?gid=0&single=true&output=csv'; // رابط CSV من file2
+
+        async function fetchCSV(url) {
+            const response = await fetch(url);
+            const text = await response.text();
+            const rows = text.split('\n').map(row => row.split(','));
+            return rows;
+        }
+
         document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
+            link.addEventListener('click', async function(e) {
                 e.preventDefault();
                 const title = this.getAttribute('data-title');
                 const header = this.getAttribute('data-header');
@@ -143,20 +153,28 @@
                 document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
                 this.classList.add('active');
 
+                // استرجاع البيانات من ملفات CSV
+                const file1Data = await fetchCSV(https://docs.google.com/spreadsheets/d/1oeiUtIr4kcJOQh5IrIijF2HpmoRth9Wpm9dF_GWu_Mo/pubhtml?gid=0&single=true);
+                const file2Data = await fetchCSV(https://docs.google.com/spreadsheets/d/1REHiTHenupidIpFb3nBsm64k9pfztRKiVNGofE-9U6Y/pubhtml?gid=0&single=true);
+
                 // تحديث محتوى الجدول بناءً على الزر الذي تم النقر عليه
                 const tableBody = document.getElementById('tableBody');
                 tableBody.innerHTML = ''; // مسح محتوى الجدول
 
-                // إضافة بيانات جديدة بناءً على الزر الذي تم النقر عليه
-                (data[header] || []).forEach(row => {
+                // افترض أن ملف file1 يحتوي على تواريخ وأوقات وملف file2 يحتوي على البيانات
+                const searchDate = file1Data[0][0]; // افترض أن التاريخ موجود في الخانة الأولى
+                const searchName = file2Data.find(row => row[0] === searchDate); // العثور على الاسم بناءً على التاريخ
+
+                if (searchName) {
+                    // إضافة بيانات جديدة إلى الجدول
                     const tr = document.createElement('tr');
-                    row.forEach(cell => {
+                    searchName.forEach(cell => {
                         const td = document.createElement('td');
                         td.textContent = cell;
                         tr.appendChild(td);
                     });
                     tableBody.appendChild(tr);
-                });
+                }
             });
         });
 
@@ -165,3 +183,4 @@
     </script>
 </body>
 </html>
+
