@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة التأهيلات</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('images/WhatsApp Image 2024-08-21 at 18.24.13_50eca20a.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+        }
+
+        .search-bar {
+            margin: 20px 0;
+        }
+
+        .menu {
+            display: flex;
+            overflow-x: auto; /* إضافة التمرير الأفقي */
+            white-space: nowrap; /* منع التفاف النص */
+            gap: 10px; /* المسافة بين العناصر */
+            padding: 10px 0; /* المسافة العليا والسفلية */
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block; /* تغيير من block إلى inline-block */
+            flex: 0 0 auto; /* منع العناصر من التمدد */
+            text-align: center;
+        }
+
+        .menu a.active {
+            background-color: #0056b3;
+        }
+
+        .table-container {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #27df4f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- شريط البحث -->
+        <div class="search-bar">
+            <input type="text" id="searchInput" placeholder=".....Rechercher ici">
+        </div>
+
+        <!-- القائمة -->
+        <nav class="menu">
+            <a href="#" data-title="Accueil" data-header="Les Habilitation">Accueil</a>
+            <a href="#" data-title="CONDUCTEUR ENGINS" data-header="CONDUCTEUR ENGINS">CONDUCTEUR ENGINS</a>
+            <a href="#" data-title="Inspecteur outillage" data-header="Inspecteur outillage">Inspecteur outillage</a>
+            <a href="#" data-title="Réception Echafaudage" data-header="Réception Echafaudage">Réception Echafaudage</a>
+            <a href="#" data-title="Personnes autorisées à accéder à la tour" data-header="Personnes autorisées à accéder à la tour">Personnes autorisées à accéder à la tour</a>
+            <a href="#" data-title="Signaleur" data-header="Signaleur">Signaleur</a>
+            <a href="#" data-title="Chef de manœuvre" data-header="Chef de manœuvre">Chef de manœuvre</a>
+            <a href="#" data-title="élingeur" data-header="élingeur">élingeur</a>
+            <a href="#" data-title="Emetteur de permis de levage" data-header="Emetteur de permis de levage">Emetteur de permis de levage</a>
+            <a href="#" data-title="Chargé de consignation" data-header="Chargé de consignation">Chargé de consignation</a>
+            <a href="#" data-title="Porteur de cadenas" data-header="Porteur de cadenas">Porteur de cadenas</a>
+            <a href="#" data-title="Personnes autorisées à travailler en hauteur" data-header="Personnes autorisées à travailler en hauteur">Personnes autorisées à travailler en hauteur</a>
+            <a href="#" data-title="Emetteur de permis WAH" data-header="Emetteur de permis WAH">Emetteur de permis WAH</a>
+            <a href="#" data-title="Emetteur de permis travail à chaud" data-header="Emetteur de permis travail à chaud">Emetteur de permis travail à chaud</a>
+            <a href="#" data-title="Emetteur de permis EC" data-header="Emetteur de permis EC">Emetteur de permis EC</a>
+            <a href="#" data-title="Employé autorisé à travailler à chaud" data-header="Employé autorisé à travailler à chaud">Employé autorisé à travailler à chaud</a>
+            <a href="#" data-title="Entrant et surveillant EC" data-header="Entrant et surveillant EC">Entrant et surveillant EC</a>
+            <a href="#" data-title="Habilitation ATEX niveau 0" data-header="Habilitation ATEX niveau 0">Habilitation ATEX niveau 0</a>
+            <a href="#" data-title="AMBULANCIER" data-header="AMBULANCIER">AMBULANCIER</a>
+            <a href="#" data-title="CONDUITE CHARIOT ELEVATEUR" data-header="CONDUITE CHARIOT ELEVATEUR">CONDUITE CHARIOT ELEVATEUR</a>
+            <a href="#" data-title="CONDUITE NACELLE/PEMP" data-header="CONDUITE NACELLE/PEMP">CONDUITE NACELLE/PEMP</a>
+            <a href="#" data-title="SAUVETAGE EN HAUTEUR ET PROFONDEUR" data-header="SAUVETAGE EN HAUTEUR ET PROFONDEUR">SAUVETAGE EN HAUTEUR ET PROFONDEUR</a>
+            <a href="#" data-title="Montage et démontage Echafaudage" data-header="Montage et démontage Echafaudage">Montage et démontage Echafaudage</a>
+            <a href="#" data-title="Habilitation electrique pour électricien" data-header="Habilitation electrique pour électricien">Habilitation electrique pour électricien</a>
+            <a href="#" data-title="Habilitation electrique pour non electricien" data-header="Habilitation electrique pour non electricien">Habilitation electrique pour non electricien</a>
+            <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
+            <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
+            <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
+            <a href="#" data-title="COMBATTANT DE FEU- équipe 1ere intervention" data-header="COMBATTANT DE FEU- équipe 1ere intervention">COMBATTANT DE FEU- équipe 1ere intervention</a>
+            <a href="#" data-title="COMBATTANT DE FEU- équipe 2eme intervention" data-header="COMBATTANT DE FEU- équipe 2eme intervention">COMBATTANT DE FEU- équipe 2eme intervention</a>
+        </nav>
+
+        <!-- الجدول -->
+        <div class="table-container">
+            <table id="habilitationsTable">
+                <thead>
+                    <tr>
+                        <th id="tableHeader">Les Habilitation</th>
+                        <th>Gmail</th>
+                        <th>Tel</th>
+                        <th>Nom complete</th>
+                    </tr>
+                </thead>
+                <tbody id="tableBody">
+                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        // بيانات المثال
+        document.querySelectorAll('.menu a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const title = this.getAttribute('data-title');
+                const header = this.getAttribute('data-header');
+
+                document.title = title;
+                document.getElementById('tableHeader').innerText = header;
+
+                // تغيير لون الخلفية للنشاط
+                document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+                this.classList.add('active');
+
+                // تحديث محتوى الجدول بناءً على الزر الذي تم النقر عليه
+                const tableBody = document.getElementById('tableBody');
+                tableBody.innerHTML = ''; // مسح محتوى الجدول
+
+                // إضافة بيانات جديدة بناءً على الزر الذي تم النقر عليه
+                (data[header] || []).forEach(row => {
+                    const tr = document.createElement('tr');
+                    row.forEach(cell => {
+                        const td = document.createElement('td');
+                        td.textContent = cell;
+                        tr.appendChild(td);
+                    });
+                    tableBody.appendChild(tr);
+                });
+            });
+        });
+
+        // تعيين "Accueil" كعناصر افتراضية
+        document.querySelector('.menu a[data-title="Accueil"]').click();
+    </script>
+</body>
+</html>
