@@ -154,8 +154,8 @@
                 this.classList.add('active');
 
                 // استرجاع البيانات من ملفات CSV
-                const file1Data = await fetchCSV(https://docs.google.com/spreadsheets/d/1oeiUtIr4kcJOQh5IrIijF2HpmoRth9Wpm9dF_GWu_Mo/pubhtml?gid=0&single=true);
-                const file2Data = await fetchCSV(https://docs.google.com/spreadsheets/d/1REHiTHenupidIpFb3nBsm64k9pfztRKiVNGofE-9U6Y/pubhtml?gid=0&single=true);
+                const file1Data = await fetchCSV(CSV_FILE_URL_1);
+                const file2Data = await fetchCSV(CSV_FILE_URL_2);
 
                 // تحديث محتوى الجدول بناءً على الزر الذي تم النقر عليه
                 const tableBody = document.getElementById('tableBody');
@@ -183,4 +183,5 @@
     </script>
 </body>
 </html>
+
 
