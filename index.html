@@ -80,7 +80,34 @@
         <nav class="menu">
             <a href="#" data-title="Accueil" data-header="Les Habilitation">Accueil</a>
             <a href="#" data-title="CONDUCTEUR ENGINS" data-header="CONDUCTEUR ENGINS">CONDUCTEUR ENGINS</a>
-            <!-- Ajoutez plus de liens ici si nécessaire -->
+            <a href="#" data-title="Inspecteur outillage" data-header="Inspecteur outillage">Inspecteur outillage</a>
+            <a href="#" data-title="Réception Echafaudage" data-header="Réception Echafaudage">Réception Echafaudage</a>
+            <a href="#" data-title="Personnes autorisées à accéder à la tour" data-header="Personnes autorisées à accéder à la tour">Personnes autorisées à accéder à la tour</a>
+            <a href="#" data-title="Signaleur" data-header="Signaleur">Signaleur</a>
+            <a href="#" data-title="Chef de manœuvre" data-header="Chef de manœuvre">Chef de manœuvre</a>
+            <a href="#" data-title="élingeur" data-header="élingeur">élingeur</a>
+            <a href="#" data-title="Emetteur de permis de levage" data-header="Emetteur de permis de levage">Emetteur de permis de levage</a>
+            <a href="#" data-title="Chargé de consignation" data-header="Chargé de consignation">Chargé de consignation</a>
+            <a href="#" data-title="Porteur de cadenas" data-header="Porteur de cadenas">Porteur de cadenas</a>
+            <a href="#" data-title="Personnes autorisées à travailler en hauteur" data-header="Personnes autorisées à travailler en hauteur">Personnes autorisées à travailler en hauteur</a>
+            <a href="#" data-title="Emetteur de permis WAH" data-header="Emetteur de permis WAH">Emetteur de permis WAH</a>
+            <a href="#" data-title="Emetteur de permis travail à chaud" data-header="Emetteur de permis travail à chaud">Emetteur de permis travail à chaud</a>
+            <a href="#" data-title="Emetteur de permis EC" data-header="Emetteur de permis EC">Emetteur de permis EC</a>
+            <a href="#" data-title="Employé autorisé à travailler à chaud" data-header="Employé autorisé à travailler à chaud">Employé autorisé à travailler à chaud</a>
+            <a href="#" data-title="Entrant et surveillant EC" data-header="Entrant et surveillant EC">Entrant et surveillant EC</a>
+            <a href="#" data-title="Habilitation ATEX niveau 0" data-header="Habilitation ATEX niveau 0">Habilitation ATEX niveau 0</a>
+            <a href="#" data-title="AMBULANCIER" data-header="AMBULANCIER">AMBULANCIER</a>
+            <a href="#" data-title="CONDUITE CHARIOT ELEVATEUR" data-header="CONDUITE CHARIOT ELEVATEUR">CONDUITE CHARIOT ELEVATEUR</a>
+            <a href="#" data-title="CONDUITE NACELLE/PEMP" data-header="CONDUITE NACELLE/PEMP">CONDUITE NACELLE/PEMP</a>
+            <a href="#" data-title="SAUVETAGE EN HAUTEUR ET PROFONDEUR" data-header="SAUVETAGE EN HAUTEUR ET PROFONDEUR">SAUVETAGE EN HAUTEUR ET PROFONDEUR</a>
+            <a href="#" data-title="Montage et démontage Echafaudage" data-header="Montage et démontage Echafaudage">Montage et démontage Echafaudage</a>
+            <a href="#" data-title="Habilitation electrique pour électricien" data-header="Habilitation electrique pour électricien">Habilitation electrique pour électricien</a>
+            <a href="#" data-title="Habilitation electrique pour non electricien" data-header="Habilitation electrique pour non electricien">Habilitation electrique pour non electricien</a>
+            <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
+            <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
+            <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
+            <a href="#" data-title="COMBATTANT DE FEU- équipe 1ere intervention" data-header="COMBATTANT DE FEU- équipe 1ere intervention">COMBATTANT DE FEU- équipe 1ere intervention</a>
+            <a href="#" data-title="COMBATTANT DE FEU- équipe 2eme intervention" data-header="COMBATTANT DE FEU- équipe 2eme intervention">COMBATTANT DE FEU- équipe 2eme intervention</a>
         </nav>
 
         <!-- الجدول -->
@@ -133,20 +160,21 @@
                 const tableBody = document.getElementById('tableBody');
                 tableBody.innerHTML = ''; // Effacer le contenu du tableau
 
-                // Supposer que le fichier file1 contient des dates et heures et que le fichier file2 contient des données
-                const searchDate = file1Data[0][0]; // Supposer que la date est dans la première cellule
-                const searchName = file2Data.find(row => row[0] === searchDate); // Trouver le nom basé sur la date
+                // Supposer que le fichier file1 contient des données que l'on recherche
+                const searchName = this.getAttribute('data-header'); // Nom de l'onglet sélectionné
 
-                if (searchName) {
-                    // Ajouter de nouvelles données au tableau
+                // Trouver les lignes correspondant au titre sélectionné dans le fichier 2
+                const matchingRows = file2Data.filter(row => row[0] === searchName);
+
+                matchingRows.forEach(row => {
                     const tr = document.createElement('tr');
-                    searchName.forEach(cell => {
+                    row.forEach(cell => {
                         const td = document.createElement('td');
                         td.textContent = cell;
                         tr.appendChild(td);
                     });
                     tableBody.appendChild(tr);
-                }
+                });
             });
         });
 
@@ -155,5 +183,4 @@
     </script>
 </body>
 </html>
-
 
