@@ -80,9 +80,7 @@
         <nav class="menu">
             <a href="#" data-title="Accueil" data-header="Les Habilitation">Accueil</a>
             <a href="#" data-title="CONDUCTEUR ENGINS" data-header="CONDUCTEUR ENGINS">CONDUCTEUR ENGINS</a>
-            <a href="#" data-title="Inspecteur outillage" data-header="Inspecteur outillage">Inspecteur outillage</a>
-            <a href="#" data-title="Réception Echafaudage" data-header="Réception Echafaudage">Réception Echafaudage</a>
-            <!-- أضف المزيد من العناصر هنا حسب الحاجة -->
+            <!-- Ajoutez plus de liens ici si nécessaire -->
         </nav>
 
         <!-- الجدول -->
@@ -93,20 +91,19 @@
                         <th id="tableHeader">Les Habilitation</th>
                         <th>Gmail</th>
                         <th>Tel</th>
-                        <th>Nom complete</th>
+                        <th>Nom complet</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
+                    <!-- Les lignes seront ajoutées ici -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // روابط CSV من Google Sheets
-        const CSV_FILE_URL_1 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQi8B9v5CEHkVi9l2E7L1slEn40pl2TjDK7Tga8Tg7oXsz6FgKJ2q_cy2iKhkIjaK6i5IRK7sfuD9iJ/pub?gid=0&single=true&output=csv'; // رابط CSV من file1
-        const CSV_FILE_URL_2 = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQi8B9v5CEHkVi9l2E7L1slEn40pl2TjDK7Tga8Tg7oXsz6FgKJ2q_cy2iKhkIjaK6i5IRK7sfuD9iJ/pub?gid=0&single=true&output=csv'; // رابط CSV من file2
+        const CSV_FILE_URL_1 = 'https://docs.google.com/spreadsheets/d/1oeiUtIr4kcJOQh5IrIijF2HpmoRth9Wpm9dF_GWu_Mo/pub?gid=0&single=true&output=csv'; // URL du CSV du fichier 1
+        const CSV_FILE_URL_2 = 'https://docs.google.com/spreadsheets/d/1REHiTHenupidIpFb3nBsm64k9pfztRKiVNGofE-9U6Y/pub?output=csv'; // URL du CSV du fichier 2
 
         async function fetchCSV(url) {
             const response = await fetch(url);
@@ -124,24 +121,24 @@
                 document.title = title;
                 document.getElementById('tableHeader').innerText = header;
 
-                // تغيير لون الخلفية للنشاط
+                // Changer la couleur de fond pour l'élément actif
                 document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
                 this.classList.add('active');
 
-                // استرجاع البيانات من ملفات CSV
+                // Récupérer les données des fichiers CSV
                 const file1Data = await fetchCSV(CSV_FILE_URL_1);
                 const file2Data = await fetchCSV(CSV_FILE_URL_2);
 
-                // تحديث محتوى الجدول بناءً على الزر الذي تم النقر عليه
+                // Mettre à jour le contenu du tableau en fonction du lien cliqué
                 const tableBody = document.getElementById('tableBody');
-                tableBody.innerHTML = ''; // مسح محتوى الجدول
+                tableBody.innerHTML = ''; // Effacer le contenu du tableau
 
-                // افترض أن ملف file1 يحتوي على تواريخ وأوقات وملف file2 يحتوي على البيانات
-                const searchDate = file1Data[0][0]; // افترض أن التاريخ موجود في الخانة الأولى
-                const searchName = file2Data.find(row => row[0] === searchDate); // العثور على الاسم بناءً على التاريخ
+                // Supposer que le fichier file1 contient des dates et heures et que le fichier file2 contient des données
+                const searchDate = file1Data[0][0]; // Supposer que la date est dans la première cellule
+                const searchName = file2Data.find(row => row[0] === searchDate); // Trouver le nom basé sur la date
 
                 if (searchName) {
-                    // إضافة بيانات جديدة إلى الجدول
+                    // Ajouter de nouvelles données au tableau
                     const tr = document.createElement('tr');
                     searchName.forEach(cell => {
                         const td = document.createElement('td');
@@ -153,9 +150,10 @@
             });
         });
 
-        // تعيين "Accueil" كعناصر افتراضية
+        // Définir "Accueil" comme élément par défaut
         document.querySelector('.menu a[data-title="Accueil"]').click();
     </script>
 </body>
 </html>
+
 
