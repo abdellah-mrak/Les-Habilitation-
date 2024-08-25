@@ -1,12 +1,12 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestion des habilitations</title>
+    <title>إدارة التأهيلات</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        body {   
+        body {  
             margin: 0;
             padding: 0;
             background-image: url('WhatsApp Image 2024-08-23 at 11.03.52_06203d5a.jpg');
@@ -121,38 +121,28 @@
         .logout-button:hover {
             background-color: #0056b3;
         }
-
-        /* Masquer le formulaire de connexion lorsque l'utilisateur est connecté */
-        .login-container.hidden {
-            display: none;
-        }
-
-        /* Afficher le contenu du site lorsque l'utilisateur est connecté */
-        .content-hidden {
-            display: none;
-        }
     </style>
 </head>
 <body>
+    <!-- Bouton de déconnexion -->
+    <button class="logout-button" onclick="logout()">تسجيل الخروج</button>
+
     <!-- Formulaire de connexion -->
     <div class="login-container" id="loginContainer">
-        <h2>Se connecter</h2>
-        <input type="email" id="email" placeholder="Adresse e-mail">
-        <input type="password" id="password" placeholder="Mot de passe">
-        <button onclick="login()">Se connecter</button>
+        <h2>تسجيل الدخول</h2>
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <button onclick="login()">تسجيل الدخول</button>
         <p id="loginMessage" style="color: red;"></p>
     </div>
 
-    <!-- Bouton de déconnexion -->
-    <button class="logout-button" onclick="logout()">Déconnexion</button>
-
-    <div class="container content-hidden" id="contentContainer">
-        <!-- Barre de recherche -->
+    <div class="container">
+        <!-- شريط البحث -->
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="....Rechercher ici">
+            <input type="text" id="searchInput" placeholder="....بحث هنا">
         </div>
 
-        <!-- Menu -->
+        <!-- القائمة -->
         <nav class="menu">
             <a href="#" data-title="Accueil" data-header="Les Habilitation">Accueil</a>
             <a href="#" data-title="CONDUCTEUR ENGINS" data-header="CONDUCTEUR ENGINS">CONDUCTEUR ENGINS</a>
@@ -182,11 +172,10 @@
             <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
             <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
             <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
-            <a href="#" data-title="COMBATTANT DE FEU- équipe 1ere intervention" data-header="COMBATTANT DE FEU- équipe 1ere intervention">COMBATTANT DE FEU- équipe 1ere intervention</a>
-            <a href="#" data-title="COMBATTANT DE FEU- équipe 2eme intervention" data-header="COMBATTANT DE FEU- équipe 2eme intervention">COMBATTANT DE FEU- équipe 2eme intervention</a>
+            <a href="#" data-title="COMBATTANT DE FEU EPI" data-header="COMBATTANT DE FEU EPI">COMBATTANT DE FEU EPI</a>
         </nav>
 
-        <!-- Tableau -->
+        <!-- الجدول -->
         <div class="table-container">
             <table id="habilitationsTable">
                 <thead>
@@ -198,14 +187,27 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- Ajouter plus de lignes selon besoin -->
+                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // Données d'exemple pour le tableau
+        // Données d'exemple pour la table
+        const data = {
+            'Les Habilitation': [
+                ['1234567890', 'Ahmed Idrissi', '12345'],
+                ['0987654321', 'Fatima Zahra', '67890']
+                // Ajouter plus de données ici si nécessaire
+            ],
+            'CONDUCTEUR ENGINS': [
+                ['1122334455', 'Youssef Ali', '54321'],
+                ['5566778899', 'Sara Mohamed', '98765']
+                // Ajouter plus de données ici si nécessaire
+            ],
+            // Ajouter plus de données pour chaque en-tête de tableau ici
+        };
 
         // Données de connexion
         const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
@@ -221,29 +223,21 @@
             const message = document.getElementById('loginMessage');
 
             if (email === validEmail && password === validPassword) {
-                document.getElementById('loginContainer').classList.add('hidden'); // Masquer le formulaire de connexion
-                document.getElementById('contentContainer').classList.remove('content-hidden'); // Afficher le contenu du site
-                localStorage.setItem('loggedIn', 'true'); // Enregistrer l'état de connexion dans le stockage local
+                document.getElementById('loginContainer').style.display = 'none';
+                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
             } else {
-                message.textContent = 'Adresse e-mail ou mot de passe incorrect';
+                message.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
             }
         }
 
         function logout() {
-            localStorage.removeItem('loggedIn'); // Supprimer l'état de connexion du stockage local
             location.reload(); // Recharger la page pour afficher le formulaire de connexion
         }
 
-        // Vérifier l'état de connexion au chargement de la page
-        window.onload = function() {
-            if (localStorage.getItem('loggedIn') !== 'true') {
-                showLogin();
-            } else {
-                document.getElementById('contentContainer').classList.remove('content-hidden'); // Afficher le contenu du site si l'utilisateur est connecté
-            }
-        };
+        // Afficher le formulaire de connexion au chargement de la page
+        window.onload = showLogin;
 
-        // Code pour la gestion des clics sur les éléments du menu et la mise à jour du tableau
+        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
