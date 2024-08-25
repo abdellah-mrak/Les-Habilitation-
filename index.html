@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="ar">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة التأهيلات</title>
+    <title>Gestion des habilitations</title>
     <link rel="stylesheet" href="style.css">
     <style>
         body {  
@@ -20,7 +20,6 @@
         .container {
             width: 80%;
             margin: auto;
-            display: none; /* Masquer le contenu principal par défaut */
         }
 
         .search-bar {
@@ -31,8 +30,8 @@
             display: flex;
             overflow-x: auto; /* Ajouter le défilement horizontal */
             white-space: nowrap; /* Empêcher le retour à la ligne */
-            gap: 10px; /* Espace entre les éléments */
-            padding: 10px 0; /* Espacement supérieur et inférieur */
+            gap: 10px; /* Espacement entre les éléments */
+            padding: 10px 0; /* Espacement en haut et en bas */
         }
 
         .menu a {
@@ -42,7 +41,7 @@
             padding: 10px 20px;
             border-radius: 5px;
             display: inline-block; /* Changer de block à inline-block */
-            flex: 0 0 auto; /* Empêcher l'extension des éléments */
+            flex: 0 0 auto; /* Empêcher les éléments de s'étirer */
             text-align: center;
         }
 
@@ -69,7 +68,7 @@
             background-color: #27df4f;
         }
 
-        /* Ajouter un style pour le formulaire de connexion */
+        /* Style pour le formulaire de connexion */
         .login-container {
             position: absolute;
             top: 50%;
@@ -79,6 +78,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* Cacher le formulaire par défaut */
         }
 
         .login-container input {
@@ -104,18 +104,21 @@
             background-color: #0056b3;
         }
 
+        /* Style pour le bouton de déconnexion */
         .logout-button {
-            margin: 20px 0;
+            position: absolute;
+            top: 20px;
+            right: 20px;
             padding: 10px 20px;
-            background-color: #dc3545;
-            color: white;
+            background-color: #007bff;
             border: none;
+            color: white;
             border-radius: 5px;
             cursor: pointer;
         }
 
         .logout-button:hover {
-            background-color: #c82333;
+            background-color: #0056b3;
         }
     </style>
 </head>
@@ -129,7 +132,10 @@
         <p id="loginMessage" style="color: red;"></p>
     </div>
 
-    <div class="container" id="contentContainer">
+    <!-- Bouton de déconnexion -->
+    <button class="logout-button" onclick="logout()">Déconnexion</button>
+
+    <div class="container">
         <!-- Barre de recherche -->
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="....Rechercher ici">
@@ -176,33 +182,26 @@
                     <tr>
                         <th id="tableHeader">Les Habilitation</th>
                         <th>Tel</th>
-                        <th>Nom complete</th>
+                        <th>Nom complet</th>
                         <th>Matricule</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- Ajouter plus de lignes si nécessaire -->
+                    <!-- Ajouter plus de lignes selon besoin -->
                 </tbody>
             </table>
         </div>
-        
-        <!-- Bouton de déconnexion -->
-        <button class="logout-button" onclick="logout()">Déconnexion</button>
     </div>
 
     <script>
+        // Données d'exemple pour le tableau
+
         // Données de connexion
         const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
         const validPassword = 'Abde@2006';
 
         function showLogin() {
             document.getElementById('loginContainer').style.display = 'block';
-            document.getElementById('contentContainer').style.display = 'none';
-        }
-
-        function hideLogin() {
-            document.getElementById('loginContainer').style.display = 'none';
-            document.getElementById('contentContainer').style.display = 'block';
         }
 
         function login() {
@@ -211,31 +210,29 @@
             const message = document.getElementById('loginMessage');
 
             if (email === validEmail && password === validPassword) {
-                localStorage.setItem('loggedIn', 'true');
-                hideLogin();
+                document.getElementById('loginContainer').style.display = 'none';
+                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+                localStorage.setItem('loggedIn', 'true'); // Enregistrer l'état de connexion dans le stockage local
             } else {
-                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
+                message.textContent = 'Adresse e-mail ou mot de passe incorrect';
             }
         }
 
         function logout() {
-            localStorage.removeItem('loggedIn');
-            showLogin();
+            localStorage.removeItem('loggedIn'); // Supprimer l'état de connexion du stockage local
+            location.reload(); // Recharger la page pour afficher le formulaire de connexion
         }
 
-        // Vérifier si l'utilisateur est déjà connecté
-        function checkLogin() {
-            if (localStorage.getItem('loggedIn') === 'true') {
-                hideLogin();
-            } else {
+        // Vérifier l'état de connexion au chargement de la page
+        window.onload = function() {
+            if (localStorage.getItem('loggedIn') !== 'true') {
                 showLogin();
+            } else {
+                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site si l'utilisateur est connecté
             }
-        }
+        };
 
-        // Afficher le formulaire de connexion ou le contenu selon l'état de connexion
-        window.onload = checkLogin;
-
-        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
+        // Code pour la gestion des clics sur les éléments du menu et la mise à jour du tableau
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
