@@ -67,9 +67,54 @@
         th {
             background-color: #27df4f;
         }
+
+        /* إضافة نمط لنموذج تسجيل الدخول */
+        .login-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: none; /* إخفاء النموذج بشكل افتراضي */
+        }
+
+        .login-container input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
+    <!-- نموذج تسجيل الدخول -->
+    <div class="login-container" id="loginContainer">
+        <h2>تسجيل الدخول</h2>
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <button onclick="login()">تسجيل الدخول</button>
+        <p id="loginMessage" style="color: red;"></p>
+    </div>
+
     <div class="container">
         <!-- شريط البحث -->
         <div class="search-bar">
@@ -129,7 +174,44 @@
     </div>
 
     <script>
-        // بيانات المثال
+        // Données d'exemple pour la table
+        const data = {
+            'Les Habilitation': [
+                ['123456789', 'Ahmed Idrissi', '987654', '001'],
+                ['987654321', 'Fatima Zahra', '123456', '002']
+            ],
+            'CONDUCTEUR ENGINS': [
+                ['0123456789', 'Mohamed Ali', '876543', '003'],
+                ['0987654321', 'Salma Amine', '654321', '004']
+            ],
+            // Ajouter plus de données pour chaque en-tête ici
+        };
+
+        // Données de connexion
+        const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
+        const validPassword = 'Abde@2006';
+
+        function showLogin() {
+            document.getElementById('loginContainer').style.display = 'block';
+        }
+
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const message = document.getElementById('loginMessage');
+
+            if (email === validEmail && password === validPassword) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+            } else {
+                message.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+            }
+        }
+
+        // Afficher le formulaire de connexion au chargement de la page
+        window.onload = showLogin;
+
+        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -139,15 +221,12 @@
                 document.title = title;
                 document.getElementById('tableHeader').innerText = header;
 
-                // تغيير لون الخلفية للنشاط
                 document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
                 this.classList.add('active');
 
-                // تحديث محتوى الجدول بناءً على الزر الذي تم النقر عليه
                 const tableBody = document.getElementById('tableBody');
-                tableBody.innerHTML = ''; // مسح محتوى الجدول
+                tableBody.innerHTML = '';
 
-                // إضافة بيانات جديدة بناءً على الزر الذي تم النقر عليه
                 (data[header] || []).forEach(row => {
                     const tr = document.createElement('tr');
                     row.forEach(cell => {
@@ -160,7 +239,6 @@
             });
         });
 
-        // تعيين "Accueil" كعناصر افتراضية
         document.querySelector('.menu a[data-title="Accueil"]').click();
     </script>
 </body>
