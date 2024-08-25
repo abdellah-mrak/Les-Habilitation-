@@ -111,7 +111,7 @@
             top: 20px;
             right: 20px;
             padding: 10px 20px;
-            background-color: #007bff;
+            background-color: #ff0000;
             border: none;
             color: white;
             border-radius: 5px;
@@ -125,21 +125,21 @@
 </head>
 <body>
     <!-- Bouton de déconnexion -->
-    <button class="logout-button" onclick="logout()">تسجيل الخروج</button>
+    <button class="logout-button" onclick="logout()">Se connecter</button>
 
     <!-- Formulaire de connexion -->
     <div class="login-container" id="loginContainer">
-        <h2>تسجيل الدخول</h2>
-        <input type="email" id="email" placeholder="البريد الإلكتروني">
-        <input type="password" id="password" placeholder="كلمة المرور">
-        <button onclick="login()">تسجيل الدخول</button>
+        <h2>Se connecter</h2>
+        <input type="email" id="email" placeholder="Adresse e-mail">
+        <input type="password" id="password" placeholder="Mot de passe">
+        <button onclick="login()">Se connecter</button>
         <p id="loginMessage" style="color: red;"></p>
     </div>
 
     <div class="container">
         <!-- شريط البحث -->
         <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="....بحث هنا">
+            <input type="text" id="searchInput" placeholder="....Rechercher ici">
         </div>
 
         <!-- القائمة -->
@@ -194,21 +194,6 @@
     </div>
 
     <script>
-        // Données d'exemple pour la table
-        const data = {
-            'Les Habilitation': [
-                ['1234567890', 'Ahmed Idrissi', '12345'],
-                ['0987654321', 'Fatima Zahra', '67890']
-                // Ajouter plus de données ici si nécessaire
-            ],
-            'CONDUCTEUR ENGINS': [
-                ['1122334455', 'Youssef Ali', '54321'],
-                ['5566778899', 'Sara Mohamed', '98765']
-                // Ajouter plus de données ici si nécessaire
-            ],
-            // Ajouter plus de données pour chaque en-tête de tableau ici
-        };
-
         // Données de connexion
         const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
         const validPassword = 'Abde@2006';
@@ -226,7 +211,7 @@
                 document.getElementById('loginContainer').style.display = 'none';
                 document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
             } else {
-                message.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
             }
         }
 
