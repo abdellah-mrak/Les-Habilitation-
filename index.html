@@ -20,6 +20,7 @@
         .container {
             width: 80%;
             margin: auto;
+            display: none; /* Masquer le contenu principal par défaut */
         }
 
         .search-bar {
@@ -28,10 +29,10 @@
 
         .menu {
             display: flex;
-            overflow-x: auto; /* إضافة التمرير الأفقي */
-            white-space: nowrap; /* منع التفاف النص */
-            gap: 10px; /* المسافة بين العناصر */
-            padding: 10px 0; /* المسافة العليا والسفلية */
+            overflow-x: auto; /* Ajouter le défilement horizontal */
+            white-space: nowrap; /* Empêcher le retour à la ligne */
+            gap: 10px; /* Espace entre les éléments */
+            padding: 10px 0; /* Espacement supérieur et inférieur */
         }
 
         .menu a {
@@ -40,8 +41,8 @@
             background-color: #007bff;
             padding: 10px 20px;
             border-radius: 5px;
-            display: inline-block; /* تغيير من block إلى inline-block */
-            flex: 0 0 auto; /* منع العناصر من التمدد */
+            display: inline-block; /* Changer de block à inline-block */
+            flex: 0 0 auto; /* Empêcher l'extension des éléments */
             text-align: center;
         }
 
@@ -68,7 +69,7 @@
             background-color: #27df4f;
         }
 
-        /* إضافة نمط لنموذج تسجيل الدخول */
+        /* Ajouter un style pour le formulaire de connexion */
         .login-container {
             position: absolute;
             top: 50%;
@@ -78,7 +79,6 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* إخفاء النموذج بشكل افتراضي */
         }
 
         .login-container input {
@@ -103,25 +103,39 @@
         .login-container button:hover {
             background-color: #0056b3;
         }
+
+        .logout-button {
+            margin: 20px 0;
+            padding: 10px 20px;
+            background-color: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
-    <!-- نموذج تسجيل الدخول -->
+    <!-- Formulaire de connexion -->
     <div class="login-container" id="loginContainer">
-        <h2>تسجيل الدخول</h2>
-        <input type="email" id="email" placeholder="البريد الإلكتروني">
-        <input type="password" id="password" placeholder="كلمة المرور">
-        <button onclick="login()">تسجيل الدخول</button>
+        <h2>Se connecter</h2>
+        <input type="email" id="email" placeholder="Adresse e-mail">
+        <input type="password" id="password" placeholder="Mot de passe">
+        <button onclick="login()">Se connecter</button>
         <p id="loginMessage" style="color: red;"></p>
     </div>
 
-    <div class="container">
-        <!-- شريط البحث -->
+    <div class="container" id="contentContainer">
+        <!-- Barre de recherche -->
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="....Rechercher ici">
         </div>
 
-        <!-- القائمة -->
+        <!-- Menu -->
         <nav class="menu">
             <a href="#" data-title="Accueil" data-header="Les Habilitation">Accueil</a>
             <a href="#" data-title="CONDUCTEUR ENGINS" data-header="CONDUCTEUR ENGINS">CONDUCTEUR ENGINS</a>
@@ -155,7 +169,7 @@
             <a href="#" data-title="COMBATTANT DE FEU- équipe 2eme intervention" data-header="COMBATTANT DE FEU- équipe 2eme intervention">COMBATTANT DE FEU- équipe 2eme intervention</a>
         </nav>
 
-        <!-- الجدول -->
+        <!-- Tableau -->
         <div class="table-container">
             <table id="habilitationsTable">
                 <thead>
@@ -167,21 +181,28 @@
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
+                    <!-- Ajouter plus de lignes si nécessaire -->
                 </tbody>
             </table>
         </div>
+        
+        <!-- Bouton de déconnexion -->
+        <button class="logout-button" onclick="logout()">Déconnexion</button>
     </div>
 
     <script>
-        // Données d'exemple pour la table
-
         // Données de connexion
         const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
         const validPassword = 'Abde@2006';
 
         function showLogin() {
             document.getElementById('loginContainer').style.display = 'block';
+            document.getElementById('contentContainer').style.display = 'none';
+        }
+
+        function hideLogin() {
+            document.getElementById('loginContainer').style.display = 'none';
+            document.getElementById('contentContainer').style.display = 'block';
         }
 
         function login() {
@@ -190,15 +211,29 @@
             const message = document.getElementById('loginMessage');
 
             if (email === validEmail && password === validPassword) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+                localStorage.setItem('loggedIn', 'true');
+                hideLogin();
             } else {
-                message.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
             }
         }
 
-        // Afficher le formulaire de connexion au chargement de la page
-        window.onload = showLogin;
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            showLogin();
+        }
+
+        // Vérifier si l'utilisateur est déjà connecté
+        function checkLogin() {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                hideLogin();
+            } else {
+                showLogin();
+            }
+        }
+
+        // Afficher le formulaire de connexion ou le contenu selon l'état de connexion
+        window.onload = checkLogin;
 
         // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
         document.querySelectorAll('.menu a').forEach(link => {
@@ -232,3 +267,4 @@
     </script>
 </body>
 </html>
+
