@@ -20,6 +20,7 @@
         .container {
             width: 80%;
             margin: auto;
+            display: none; /* Masquer le contenu par défaut */
         }
 
         .search-bar {
@@ -78,7 +79,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* Cacher le formulaire par défaut */
+            display: block; /* Afficher le formulaire par défaut */
         }
 
         .login-container input {
@@ -120,6 +121,16 @@
         .logout-button:hover {
             background-color: #0056b3;
         }
+
+        /* Masquer le formulaire de connexion lorsque l'utilisateur est connecté */
+        .login-container.hidden {
+            display: none;
+        }
+
+        /* Afficher le contenu du site lorsque l'utilisateur est connecté */
+        .content-hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
@@ -135,7 +146,7 @@
     <!-- Bouton de déconnexion -->
     <button class="logout-button" onclick="logout()">Déconnexion</button>
 
-    <div class="container">
+    <div class="container content-hidden" id="contentContainer">
         <!-- Barre de recherche -->
         <div class="search-bar">
             <input type="text" id="searchInput" placeholder="....Rechercher ici">
@@ -210,8 +221,8 @@
             const message = document.getElementById('loginMessage');
 
             if (email === validEmail && password === validPassword) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+                document.getElementById('loginContainer').classList.add('hidden'); // Masquer le formulaire de connexion
+                document.getElementById('contentContainer').classList.remove('content-hidden'); // Afficher le contenu du site
                 localStorage.setItem('loggedIn', 'true'); // Enregistrer l'état de connexion dans le stockage local
             } else {
                 message.textContent = 'Adresse e-mail ou mot de passe incorrect';
@@ -228,7 +239,7 @@
             if (localStorage.getItem('loggedIn') !== 'true') {
                 showLogin();
             } else {
-                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site si l'utilisateur est connecté
+                document.getElementById('contentContainer').classList.remove('content-hidden'); // Afficher le contenu du site si l'utilisateur est connecté
             }
         };
 
