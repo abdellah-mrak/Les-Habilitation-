@@ -172,57 +172,82 @@
             <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
             <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
             <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
-            <a href="#" data-title="COMBATTANT DE FEU EPI" data-header="COMBATTANT DE FEU EPI">COMBATTANT DE FEU EPI</a>
+            <a href="#" data-title="COMBATTANT DE FEU ESI" data-header="COMBATTANT DE FEU ESI">COMBATTANT DE FEU ESI</a>
         </nav>
 
-        <!-- الجدول -->
+        <!-- Conteneur de la table -->
         <div class="table-container">
-            <table id="habilitationsTable">
+            <table>
                 <thead>
                     <tr>
-                        <th id="tableHeader">Les Habilitation</th>
-                        <th>Tel</th>
+                        <th colspan="4" id="tableHeader">Les Habilitation</th>
+                    </tr>
+                    <tr>
+                        <th>Téléphone</th>
                         <th>Nom complet</th>
                         <th>Matricule</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
+                    <!-- Les données seront insérées ici -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // Données de connexion
-        const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
-        const validPassword = 'Abde@2006';
-
-        function showLogin() {
-            document.getElementById('loginContainer').style.display = 'block';
-        }
-
+        // Fonction pour vérifier les identifiants
         function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const message = document.getElementById('loginMessage');
 
-            if (email === validEmail && password === validPassword) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+            // Remplacez cette condition par votre propre logique d'authentification
+            if (email === 'admin@example.com' && password === 'password') {
+                document.querySelector('.login-container').style.display = 'none';
+                document.querySelector('.container').style.display = 'block';
             } else {
-                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
+                document.getElementById('loginMessage').textContent = 'Identifiants incorrects';
             }
         }
 
+        // Fonction de déconnexion
         function logout() {
-            location.reload(); // Recharger la page pour afficher le formulaire de connexion
+            document.querySelector('.login-container').style.display = 'block';
+            document.querySelector('.container').style.display = 'none';
         }
 
-        // Afficher le formulaire de connexion au chargement de la page
-        window.onload = showLogin;
+        // Fonction pour récupérer les données de Google Sheets
+        function fetchGoogleSheetData() {
+            const url = 'https://spreadsheets.google.com/feeds/list/1REHiTHenupidIpFb3nBsm64k9pfztRKiVNGofE-9U6Y/od6/public/values?alt=json';
 
-        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    const entries = data.feed.entry;
+                    const processedData = {};
+
+                    entries.forEach(entry => {
+                        const category = entry['gsx$category']['$t'];
+                        const tel = entry['gsx$tel']['$t'];
+                        const nomComplet = entry['gsx$nomcomplet']['$t'];
+                        const matricule = entry['gsx$matricule']['$t'];
+
+                        if (!processedData[category]) {
+                            processedData[category] = [];
+                        }
+                        processedData[category].push([tel, nomComplet, matricule]);
+                    });
+
+                    // Stocker les données traitées dans une variable globale
+                    window.sheetData = processedData;
+
+                    // Déclencher l'événement click sur le premier élément du menu pour charger la vue par défaut
+                    document.querySelector('.menu a[data-title="Accueil"]').click();
+                })
+                .catch(error => console.error('Error fetching Google Sheets data:', error));
+        }
+
+        // Fonction pour mettre à jour la table lors du clic sur un élément du menu
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -238,7 +263,8 @@
                 const tableBody = document.getElementById('tableBody');
                 tableBody.innerHTML = '';
 
-                (data[header] || []).forEach(row => {
+                const data = window.sheetData[header] || [];
+                data.forEach(row => {
                     const tr = document.createElement('tr');
                     row.forEach(cell => {
                         const td = document.createElement('td');
@@ -250,7 +276,8 @@
             });
         });
 
-        document.querySelector('.menu a[data-title="Accueil"]').click();
+        // Récupérer les données au chargement de la page
+        window.onload = fetchGoogleSheetData;
     </script>
 </body>
-</html> 
+</html>
