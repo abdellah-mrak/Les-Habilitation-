@@ -20,7 +20,6 @@
         .container {
             width: 80%;
             margin: auto;
-            display: none; /* Masquer le contenu par défaut */
         }
 
         .search-bar {
@@ -29,10 +28,10 @@
 
         .menu {
             display: flex;
-            overflow-x: auto; /* Ajouter le défilement horizontal */
-            white-space: nowrap; /* Empêcher le retour à la ligne */
-            gap: 10px; /* Espacement entre les éléments */
-            padding: 10px 0; /* Espacement en haut et en bas */
+            overflow-x: auto; /* إضافة التمرير الأفقي */
+            white-space: nowrap; /* منع التفاف النص */
+            gap: 10px; /* المسافة بين العناصر */
+            padding: 10px 0; /* المسافة العليا والسفلية */
         }
 
         .menu a {
@@ -41,8 +40,8 @@
             background-color: #007bff;
             padding: 10px 20px;
             border-radius: 5px;
-            display: inline-block; /* Changer de block à inline-block */
-            flex: 0 0 auto; /* Empêcher les éléments de s'étirer */
+            display: inline-block; /* تغيير من block إلى inline-block */
+            flex: 0 0 auto; /* منع العناصر من التمدد */
             text-align: center;
         }
 
@@ -69,7 +68,7 @@
             background-color: #27df4f;
         }
 
-        /* Style pour le formulaire de connexion */
+        /* إضافة نمط لنموذج تسجيل الدخول */
         .login-container {
             position: absolute;
             top: 50%;
@@ -79,7 +78,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: block; /* Afficher le formulaire par défaut */
+            display: none; /* إخفاء النموذج بشكل افتراضي */
         }
 
         .login-container input {
@@ -104,35 +103,15 @@
         .login-container button:hover {
             background-color: #0056b3;
         }
-
-        /* Style pour le bouton de déconnexion */
-        .logout-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #ff0000;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .logout-button:hover {
-            background-color: #0056b3;
-        }
     </style>
 </head>
 <body>
-    <!-- Bouton de déconnexion -->
-    <button class="logout-button" onclick="logout()">Déconnexion</button>
-
-    <!-- Formulaire de connexion -->
+    <!-- نموذج تسجيل الدخول -->
     <div class="login-container" id="loginContainer">
-        <h2>Se connecter</h2>
-        <input type="email" id="email" placeholder="Adresse e-mail">
-        <input type="password" id="password" placeholder="Mot de passe">
-        <button onclick="login()">Se connecter</button>
+        <h2>تسجيل الدخول</h2>
+        <input type="email" id="email" placeholder="البريد الإلكتروني">
+        <input type="password" id="password" placeholder="كلمة المرور">
+        <button onclick="login()">تسجيل الدخول</button>
         <p id="loginMessage" style="color: red;"></p>
     </div>
 
@@ -172,82 +151,56 @@
             <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
             <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
             <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
-            <a href="#" data-title="COMBATTANT DE FEU ESI" data-header="COMBATTANT DE FEU ESI">COMBATTANT DE FEU ESI</a>
+            <a href="#" data-title="COMBATTANT DE FEU- équipe 1ere intervention" data-header="COMBATTANT DE FEU- équipe 1ere intervention">COMBATTANT DE FEU- équipe 1ere intervention</a>
+            <a href="#" data-title="COMBATTANT DE FEU- équipe 2eme intervention" data-header="COMBATTANT DE FEU- équipe 2eme intervention">COMBATTANT DE FEU- équipe 2eme intervention</a>
         </nav>
 
-        <!-- Conteneur de la table -->
+        <!-- الجدول -->
         <div class="table-container">
-            <table>
+            <table id="habilitationsTable">
                 <thead>
                     <tr>
-                        <th colspan="4" id="tableHeader">Les Habilitation</th>
-                    </tr>
-                    <tr>
-                        <th>Téléphone</th>
-                        <th>Nom complet</th>
+                        <th id="tableHeader">Les Habilitation</th>
+                        <th>Tel</th>
+                        <th>Nom complete</th>
                         <th>Matricule</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- Les données seront insérées ici -->
+                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // Fonction pour vérifier les identifiants
+        // Données d'exemple pour la table
+
+        // Données de connexion
+        const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
+        const validPassword = 'Abde@2006';
+
+        function showLogin() {
+            document.getElementById('loginContainer').style.display = 'block';
+        }
+
         function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
+            const message = document.getElementById('loginMessage');
 
-            // Remplacez cette condition par votre propre logique d'authentification
-            if (email === 'abdellah.m\'rak23@ump.ac.ma' && password === 'Abde2006') {
-                document.querySelector('.login-container').style.display = 'none';
-                document.querySelector('.container').style.display = 'block';
+            if (email === validEmail && password === validPassword) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
             } else {
-                document.getElementById('loginMessage').textContent = 'Identifiants incorrects';
+                message.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
             }
         }
 
-        // Fonction de déconnexion
-        function logout() {
-            document.querySelector('.login-container').style.display = 'block';
-            document.querySelector('.container').style.display = 'none';
-        }
+        // Afficher le formulaire de connexion au chargement de la page
+        window.onload = showLogin;
 
-        // Fonction pour récupérer les données de Google Sheets
-        function fetchGoogleSheetData() {
-            const url = 'https://spreadsheets.google.com/feeds/list/1REHiTHenupidIpFb3nBsm64k9pfztRKiVNGofE-9U6Y/od6/public/values?alt=json';
-
-            fetch(url)
-                .then(response => response.json())
-                .then(data => {
-                    const entries = data.feed.entry;
-                    const processedData = {};
-
-                    entries.forEach(entry => {
-                        const category = entry['gsx$category']['$t'];
-                        const tel = entry['gsx$tel']['$t'];
-                        const nomComplet = entry['gsx$Nom & Prénom']['$t'];
-                        const matricule = entry['gsx$matricule']['$t'];
-
-                        if (!processedData[category]) {
-                            processedData[category] = [];
-                        }
-                        processedData[category].push([tel,Nom & Prénom, matricule]);
-                    });
-
-                    // Stocker les données traitées dans une variable globale
-                    window.sheetData = processedData;
-
-                    // Déclencher l'événement click sur le premier élément du menu pour charger la vue par défaut
-                    document.querySelector('.menu a[data-title="Accueil"]').click();
-                })
-                .catch(error => console.error('Error fetching Google Sheets data:', error));
-        }
-
-        // Fonction pour mettre à jour la table lors du clic sur un élément du menu
+        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -263,8 +216,7 @@
                 const tableBody = document.getElementById('tableBody');
                 tableBody.innerHTML = '';
 
-                const data = window.sheetData[header] || [];
-                data.forEach(row => {
+                (data[header] || []).forEach(row => {
                     const tr = document.createElement('tr');
                     row.forEach(cell => {
                         const td = document.createElement('td');
@@ -276,8 +228,7 @@
             });
         });
 
-        // Récupérer les données au chargement de la page
-        window.onload = fetchGoogleSheetData;
+        document.querySelector('.menu a[data-title="Accueil"]').click();
     </script>
 </body>
 </html>
