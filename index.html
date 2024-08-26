@@ -229,13 +229,13 @@
                     entries.forEach(entry => {
                         const category = entry['gsx$category']['$t'];
                         const tel = entry['gsx$tel']['$t'];
-                        const nomComplet = entry['gsx$nomcomplet']['$t'];
+                        const nomComplet = entry['gsx$Nom & Prénom']['$t'];
                         const matricule = entry['gsx$matricule']['$t'];
 
                         if (!processedData[category]) {
                             processedData[category] = [];
                         }
-                        processedData[category].push([tel, nomComplet, matricule]);
+                        processedData[category].push([tel,Nom & Prénom, matricule]);
                     });
 
                     // Stocker les données traitées dans une variable globale
