@@ -121,6 +121,19 @@
         .logout-button:hover {
             background-color: #0056b3;
         }
+
+        /* Ajouter ici le style pour chaque catégorie d'habilitation */
+        .category-CONDUCTEUR-ENGINS {
+            background-color: #f0f8ff;
+            color: #000;
+        }
+
+        .category-Inspecteur-outillage {
+            background-color: #ffe4e1;
+            color: #000;
+        }
+
+        /* Ajouter d'autres styles pour les autres catégories d'habilitation */
     </style>
 </head>
 <body>
@@ -171,86 +184,66 @@
             <a href="#" data-title="Habilitation electrique pour non electricien" data-header="Habilitation electrique pour non electricien">Habilitation electrique pour non electricien</a>
             <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
             <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
-            <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
-            <a href="#" data-title="COMBATTANT DE FEU EPI" data-header="COMBATTANT DE FEU EPI">COMBATTANT DE FEU EPI</a>
+            <a href="#" data-title="Travail en coactivité" data-header="Travail en coactivité">Travail en coactivité</a>
         </nav>
 
-        <!-- الجدول -->
+        <!-- Conteneur pour le tableau -->
         <div class="table-container">
-            <table id="habilitationsTable">
-                <thead>
-                    <tr>
-                        <th id="tableHeader">Habilitation</th>
-                        <th>Tel</th>
-                        <th>NomPrénom</th>
-                        <th>Matricule</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
-                </tbody>
-            </table>
+            <div id="habilitationTable"></div>
         </div>
     </div>
 
     <script>
-        // Données de connexion
-        const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
-        const validPassword = 'Abde@2006';
-
-        function showLogin() {
-            document.getElementById('loginContainer').style.display = 'block';
-        }
-
+        // Fonction de connexion
         function login() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const message = document.getElementById('loginMessage');
+            var email = document.getElementById("email").value;
+            var password = document.getElementById("password").value;
 
-            if (email === validEmail && password === validPassword) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+            // Remplacer par votre logique de vérification des identifiants
+            if (email === "test@example.com" && password === "password") {
+                document.querySelector(".container").style.display = "block";
+                document.getElementById("loginContainer").style.display = "none";
             } else {
-                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
+                document.getElementById("loginMessage").textContent = "Identifiants incorrects";
             }
         }
 
+        // Fonction de déconnexion
         function logout() {
-            location.reload(); // Recharger la page pour afficher le formulaire de connexion
+            document.querySelector(".container").style.display = "none";
+            document.getElementById("loginContainer").style.display = "block";
         }
 
-        // Afficher le formulaire de connexion au chargement de la page
-        window.onload = showLogin;
-
-        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
-        document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const title = this.getAttribute('data-title');
-                const header = this.getAttribute('data-header');
-
-                document.title = title;
-                document.getElementById('tableHeader').innerText = header;
-
-                document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
-
-                const tableBody = document.getElementById('tableBody');
-                tableBody.innerHTML = '';
-
-                (data[header] || []).forEach(row => {
-                    const tr = document.createElement('tr');
-                    row.forEach(cell => {
-                        const td = document.createElement('td');
-                        td.textContent = cell;
-                        tr.appendChild(td);
-                    });
-                    tableBody.appendChild(tr);
-                });
-            });
+        // Fonction pour récupérer et afficher les données du Google Sheet
+        fetch('https://docs.google.com/spreadsheets/d/12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY/pub?gid=1526610779&single=true&output=csv')
+        .then(response => response.text())
+        .then(data => {
+            processCSV(data);
         });
 
-        document.querySelector('.menu a[data-title="Accueil"]').click();
+        function processCSV(csv) {
+            const rows = csv.split('\n');
+            const table = document.createElement('table');
+            
+            rows.forEach(row => {
+                const cells = row.split(',');
+                const tr = document.createElement('tr');
+
+                // Supposons que l’habilitation est dans la troisième colonne
+                const habilitation = cells[2].trim();
+                tr.classList.add(`category-${habilitation.replace(/\s+/g, '-')}`);
+
+                cells.forEach(cell => {
+                    const td = document.createElement('td');
+                    td.textContent = cell.trim();
+                    tr.appendChild(td);
+                });
+
+                table.appendChild(tr);
+            });
+
+            document.getElementById('Habilitation').appendChild(table);
+        }
     </script>
 </body>
 </html>
