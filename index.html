@@ -20,6 +20,7 @@
         .container {
             width: 80%;
             margin: auto;
+            display: none; /* Masquer le contenu par défaut */
         }
 
         .search-bar {
@@ -28,10 +29,10 @@
 
         .menu {
             display: flex;
-            overflow-x: auto; /* إضافة التمرير الأفقي */
-            white-space: nowrap; /* منع التفاف النص */
-            gap: 10px; /* المسافة بين العناصر */
-            padding: 10px 0; /* المسافة العليا والسفلية */
+            overflow-x: auto; /* Ajouter le défilement horizontal */
+            white-space: nowrap; /* Empêcher le retour à la ligne */
+            gap: 10px; /* Espacement entre les éléments */
+            padding: 10px 0; /* Espacement en haut et en bas */
         }
 
         .menu a {
@@ -40,8 +41,8 @@
             background-color: #007bff;
             padding: 10px 20px;
             border-radius: 5px;
-            display: inline-block; /* تغيير من block إلى inline-block */
-            flex: 0 0 auto; /* منع العناصر من التمدد */
+            display: inline-block; /* Changer de block à inline-block */
+            flex: 0 0 auto; /* Empêcher les éléments de s'étirer */
             text-align: center;
         }
 
@@ -68,7 +69,7 @@
             background-color: #27df4f;
         }
 
-        /* إضافة نمط لنموذج تسجيل الدخول */
+        /* Style pour le formulaire de connexion */
         .login-container {
             position: absolute;
             top: 50%;
@@ -78,7 +79,7 @@
             padding: 20px;
             border-radius: 10px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: none; /* إخفاء النموذج بشكل افتراضي */
+            display: block; /* Afficher le formulaire par défaut */
         }
 
         .login-container input {
@@ -103,15 +104,35 @@
         .login-container button:hover {
             background-color: #0056b3;
         }
+
+        /* Style pour le bouton de déconnexion */
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
-    <!-- نموذج تسجيل الدخول -->
+    <!-- Bouton de déconnexion -->
+    <button class="logout-button" onclick="logout()">Déconnexion</button>
+
+    <!-- Formulaire de connexion -->
     <div class="login-container" id="loginContainer">
-        <h2>تسجيل الدخول</h2>
-        <input type="email" id="email" placeholder="البريد الإلكتروني">
-        <input type="password" id="password" placeholder="كلمة المرور">
-        <button onclick="login()">تسجيل الدخول</button>
+        <h2>Se connecter</h2>
+        <input type="email" id="email" placeholder="Adresse e-mail">
+        <input type="password" id="password" placeholder="Mot de passe">
+        <button onclick="login()">Se connecter</button>
         <p id="loginMessage" style="color: red;"></p>
     </div>
 
@@ -123,7 +144,7 @@
 
         <!-- القائمة -->
         <nav class="menu">
-            <a href="#" data-title="Accueil" data-header="Les Habilitation">Accueil</a>
+            <a href="#" data-title="Accueil" data-header="Habilitation">Accueil</a>
             <a href="#" data-title="CONDUCTEUR ENGINS" data-header="CONDUCTEUR ENGINS">CONDUCTEUR ENGINS</a>
             <a href="#" data-title="Inspecteur outillage" data-header="Inspecteur outillage">Inspecteur outillage</a>
             <a href="#" data-title="Réception Echafaudage" data-header="Réception Echafaudage">Réception Echafaudage</a>
@@ -151,8 +172,7 @@
             <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
             <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
             <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
-            <a href="#" data-title="COMBATTANT DE FEU- équipe 1ere intervention" data-header="COMBATTANT DE FEU- équipe 1ere intervention">COMBATTANT DE FEU- équipe 1ere intervention</a>
-            <a href="#" data-title="COMBATTANT DE FEU- équipe 2eme intervention" data-header="COMBATTANT DE FEU- équipe 2eme intervention">COMBATTANT DE FEU- équipe 2eme intervention</a>
+            <a href="#" data-title="COMBATTANT DE FEU EPI" data-header="COMBATTANT DE FEU EPI">COMBATTANT DE FEU EPI</a>
         </nav>
 
         <!-- الجدول -->
@@ -160,9 +180,9 @@
             <table id="habilitationsTable">
                 <thead>
                     <tr>
-                        <th id="tableHeader">Les Habilitation</th>
+                        <th id="tableHeader">Habilitation</th>
                         <th>Tel</th>
-                        <th>Nom complete</th>
+                        <th>NomPrénom</th>
                         <th>Matricule</th>
                     </tr>
                 </thead>
@@ -174,8 +194,6 @@
     </div>
 
     <script>
-        // Données d'exemple pour la table
-
         // Données de connexion
         const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
         const validPassword = 'Abde@2006';
@@ -193,8 +211,12 @@
                 document.getElementById('loginContainer').style.display = 'none';
                 document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
             } else {
-                message.textContent = 'البريد الإلكتروني أو كلمة المرور غير صحيحة';
+                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
             }
+        }
+
+        function logout() {
+            location.reload(); // Recharger la page pour afficher le formulaire de connexion
         }
 
         // Afficher le formulaire de connexion au chargement de la page
@@ -231,4 +253,4 @@
         document.querySelector('.menu a[data-title="Accueil"]').click();
     </script>
 </body>
-</html>
+</html>)
