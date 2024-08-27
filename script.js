@@ -16,6 +16,7 @@ searchInput.addEventListener('keyup', function() {
         }
         rows[i].style.display = match ? '' : 'none';
     }
+});
     <script>
         function loadProfile() {
             const sheetURL = 'https://docs.google.com/spreadsheets/d/12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY/pub?gid=1526610779&single=true&output=csv';
@@ -63,4 +64,3 @@ searchInput.addEventListener('keyup', function() {
 
         window.onload = loadProfile;
     </script>
-});
