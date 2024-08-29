@@ -185,8 +185,7 @@
                         <th>Tel</th>
                         <th>NomPrénom</th>
                         <th>Matricule</th>
-                        <th>Date de naissance</th> <!-- Nouvelle colonne -->
-                        <th>Adresse</th> <!-- Nouvelle colonne -->
+                   
                     </tr>
                 </thead>
                 <tbody id="tableBody">
@@ -229,13 +228,66 @@
         });
 
         const data = {
-            "CONDUCTEUR ENGINS": [
-                ["John Doe", "123456789", "Doe, John", "12345", "01/01/1980", "123 Rue Example"],
-                ["Jane Smith", "987654321", "Smith, Jane", "67890", "02/02/1990", "456 Rue Example"]
-            ],
-            "Inspecteur outillage": [
-                ["Alice Brown", "111222333", "Brown, Alice", "23456", "03/03/1985", "789 Rue Example"],
-                ["Bob Johnson", "444555666", "Johnson, Bob", "34567", "04/04/1975", "101 Rue Example"]
+           <!DOCTYPE html>
+<html lang="ar">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>إدارة التأهيلات</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <!-- محتوى الصفحة هنا -->
+
+    <!-- إضافة الكود في نهاية الصفحة -->
+    <script>
+        function loadProfile() {
+            const sheetURL = 'https://docs.google.com/spreadsheets/d/12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY/pub?gid=1526610779&single=true&output=csv';
+            fetch(sheetURL)
+                .then(response => response.text())
+                .then(data => {
+                    const rows = data.split('\n').slice(1); // Skip header row
+                    const urlParams = new URLSearchParams(window.location.search);
+                    const matricule = urlParams.get('matricule');
+
+                    let profile = {};
+                    rows.forEach(row => {
+                        const columns = row.split(/,(?![^"]"(?:(?:[^"]"){2})[^"]$)/);
+                        if (columns.length >= 4 && columns[0] === matricule) {
+                            profile = {
+                                matricule: columns[0],
+                                nomPrenom: columns[1],
+                                tel: columns[2],
+                                habilitations: columns[3].split(','),
+                            };
+                        }
+                    });
+
+                    if (profile.matricule) {
+                        document.getElementById('NomPrénom').textContent = profile.nomPrenom;
+                        document.getElementById('Tel').textContent = profile.tel;
+                        document.getElementById('MATRICULE').textContent = profile.matricule;
+
+                        const table = document.getElementById('habilitationTable');
+                        profile.habilitations.forEach((habilitation, index) => {
+                            const newRow = table.insertRow();
+                            const cell1 = newRow.insertCell(0);
+                            const cell2 = newRow.insertCell(1);
+
+                            cell1.textContent = index + 1;
+                            cell2.textContent = habilitation.trim();
+                        });
+                    } else {
+                        alert('No profile found for the given matricule.');
+                    }
+                });
+        }
+
+        window.onload = loadProfile;
+    </script>
+</body>
+</html>
+
             ],
             // Ajoutez des données pour les autres habilitations
         };
