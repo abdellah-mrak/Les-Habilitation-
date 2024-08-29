@@ -23,8 +23,7 @@
 
     <script>
         // رابط CSV المنشور من Google Sheets
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/13j-_0Z7BVrXv7w4qQczYq3TYCtzkXC_aiFLFjJnioko/pub?output=csv';
-
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/13j-_0Z7BVrXv7w4qQczYq3TYCtzkXC_aiFLFjJnioko/pub?gid=0&single=true&output=csv'
         // دالة لجلب بيانات CSV
         async function fetchCSVData(url) {
             const response = await fetch(url);
@@ -38,12 +37,12 @@
             const headers = lines[0].split(",");
             const result = [];
 
-            for (let i = 1; i < lines.length; i++) {
+            for(let i = 1; i < lines.length; i++) {
                 const obj = {};
                 const currentline = lines[i].split(",");
 
-                if (currentline.length === headers.length) {
-                    for (let j = 0; j < headers.length; j++) {
+                if(currentline.length === headers.length) {
+                    for(let j = 0; j < headers.length; j++) {
                         obj[headers[j].trim()] = currentline[j].trim();
                     }
                     result.push(obj);
@@ -61,12 +60,12 @@
                 const habilitationValue = row['Habilitation'].trim() !== '' ? row['Habilitation'] : 'لا توجد بيانات';
 
                 const tr = document.createElement('tr');
-                tr.innerHTML = `
+                tr.innerHTML = 
                     <td>${row['Matricule'] || 'N/A'}</td>
                     <td>${row['NomPrénom'] || 'N/A'}</td>
                     <td>${row['Tel'] || 'N/A'}</td>
                     <td>${habilitationValue}</td>
-                `;
+                ;
                 tableBody.appendChild(tr);
             });
         }
@@ -78,12 +77,8 @@
             renderTable(jsonData);
         }
 
-        // تحديث البيانات كل دقيقة (60000 ميلي ثانية)
-        setInterval(loadAndDisplayData, 60000);
-
         // استدعاء الدالة لتحميل البيانات عند تحميل الصفحة
         loadAndDisplayData();
     </script>
 </body>
 </html>
-
