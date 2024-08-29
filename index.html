@@ -173,33 +173,57 @@
             <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
             <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
             <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
-            <a href="#" data-title="Conducteur Grue" data-header="Conducteur Grue">Conducteur Grue</a>
+            <a href="#" data-title="COMBATTANT DE FEU EPI" data-header="COMBATTANT DE FEU EPI">COMBATTANT DE FEU EPI</a>
         </nav>
 
-        <!-- Tableau -->
+        <!-- الجدول -->
         <div class="table-container">
-            <table>
+            <table id="habilitationsTable">
                 <thead>
                     <tr>
                         <th id="tableHeader">Habilitation</th>
                         <th>Tel</th>
                         <th>NomPrénom</th>
                         <th>Matricule</th>
-                   
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- Les lignes du tableau seront générées dynamiquement ici -->
+                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
-            document.querySelectorAll('.menu a')[0].click();
-        });
+        // Données de connexion
+        const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
+        const validPassword = 'Abde@2006';
 
+        function showLogin() {
+            document.getElementById('loginContainer').style.display = 'block';
+        }
+
+        function login() {
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const message = document.getElementById('loginMessage');
+
+            if (email === validEmail && password === validPassword) {
+                document.getElementById('loginContainer').style.display = 'none';
+                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+            } else {
+                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
+            }
+        }
+
+        function logout() {
+            location.reload(); // Recharger la page pour afficher le formulaire de connexion
+        }
+
+        // Afficher le formulaire de connexion au chargement de la page
+        window.onload = showLogin;
+
+        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -227,88 +251,18 @@
             });
         });
 
-        const data = {
-           <!DOCTYPE html>
-<html lang="ar">
+        document.querySelector('.menu a[data-title="Accueil"]').click();
+    </script>
+    
+</body>
+    <!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة التأهيلات</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Afficher Données de Google Sheets</title>
+    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
 </head>
-<body>
-    <!-- محتوى الصفحة هنا -->
-
-    <!-- إضافة الكود في نهاية الصفحة -->
-    <script>
-        function loadProfile() {
-            const sheetURL = 'https://docs.google.com/spreadsheets/d/12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY/pub?gid=1526610779&single=true&output=csv';
-            fetch(sheetURL)
-                .then(response => response.text())
-                .then(data => {
-                    const rows = data.split('\n').slice(1); // Skip header row
-                    const urlParams = new URLSearchParams(window.location.search);
-                    const matricule = urlParams.get('matricule');
-
-                    let profile = {};
-                    rows.forEach(row => {
-                        const columns = row.split(/,(?![^"]"(?:(?:[^"]"){2})[^"]$)/);
-                        if (columns.length >= 4 && columns[0] === matricule) {
-                            profile = {
-                                matricule: columns[0],
-                                nomPrenom: columns[1],
-                                tel: columns[2],
-                                habilitations: columns[3].split(','),
-                            };
-                        }
-                    });
-
-                    if (profile.matricule) {
-                        document.getElementById('NomPrénom').textContent = profile.nomPrenom;
-                        document.getElementById('Tel').textContent = profile.tel;
-                        document.getElementById('MATRICULE').textContent = profile.matricule;
-
-                        const table = document.getElementById('habilitationTable');
-                        profile.habilitations.forEach((habilitation, index) => {
-                            const newRow = table.insertRow();
-                            const cell1 = newRow.insertCell(0);
-                            const cell2 = newRow.insertCell(1);
-
-                            cell1.textContent = index + 1;
-                            cell2.textContent = habilitation.trim();
-                        });
-                    } else {
-                        alert('No profile found for the given matricule.');
-                    }
-                });
-        }
-
-        window.onload = loadProfile;
     </script>
 </body>
 </html>
-
-            ],
-            // Ajoutez des données pour les autres habilitations
-        };
-
-        function login() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-
-            if (email === 'abdellah.m\'rak23@ump.ac.ma' && password === 'Abde@2006') {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.querySelector('.container').style.display = 'block';
-            } else {
-                document.getElementById('loginMessage').textContent = 'Identifiants incorrects.';
-            }
-        }
-
-        function logout() {
-            document.getElementById('loginContainer').style.display = 'block';
-            document.querySelector('.container').style.display = 'none';
-        }
-    </script>
-</body>
-</html>
-
