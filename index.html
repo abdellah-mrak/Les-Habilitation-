@@ -263,43 +263,6 @@
     <title>Afficher Données de Google Sheets</title>
     <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
 </head>
-<body>
-    <h1>Tableau de Données</h1>
-    <table id="data-table" border="1">
-        <thead>
-            <tr>
-                <th>NomPrénom</th>
-                <th>Habilitation</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
-
-    <script>
-        const spreadsheetId = '12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY';
-
-        function init() {
-            Tabletop.init({
-                key: spreadsheetId,
-                simpleSheet: true,
-                callback: function(data) {
-                    const tableBody = document.querySelector('#data-table tbody');
-
-                    data.forEach(row => {
-                        const tr = document.createElement('tr');
-                        tr.innerHTML = `
-                            <td>${row['NomPrénom']}</td>
-                            <td>${row['Habilitation']}</td>
-                        `;
-                        tableBody.appendChild(tr);
-                    });
-                }
-            });
-        }
-
-        window.addEventListener('DOMContentLoaded', init);
     </script>
 </body>
 </html>
-
-</html>)
