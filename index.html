@@ -41,12 +41,11 @@
     <footer>
         <p>&copy; 2024 موقعك. جميع الحقوق محفوظة.</p>
     </footer>
-       
 
     <script>
         function init() {
             Tabletop.init({
-                key: '12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY', // استبدل بـ "Spreadsheet Key" الخاص بك
+                key: 'YourSpreadsheetKey', // استبدل بـ "Spreadsheet Key" الخاص بك
                 simpleSheet: true,
                 callback: function(data, tabletop) {
                     const tableBody = document.getElementById('tableBody');
@@ -62,10 +61,14 @@
                     });
                 }
             });
-        } 
-    <footer>
-        <p>&copy; <td>${row.Habilitation}</td> </p>
-    </footer>
+        }
+
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>
+
 
         window.addEventListener('DOMContentLoaded', init);
     </script>
