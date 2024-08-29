@@ -281,10 +281,10 @@
                     const columns = row.split(/,(?![^"]"(?:(?:[^"]"){2})[^"]$)/);
                     if (columns.length >= 4 && columns[0] === matricule) { // Check if Matricule matches
                         profile = {
-                            Matricule: columns[0],
-                            NomPrenom: columns[1],
-                            Tel: columns[2],
-                            Habilitations: columns[3].split(','),
+                            Matricule: columns[1],
+                            NomPrenom: columns[2],
+                            Tel: columns[3],
+                            Habilitations: columns[4],
                         };
                     }
                 });
@@ -294,8 +294,8 @@
                     document.getElementById('Tel').textContent = profile.Tel;
                     document.getElementById('MATRICULE').textContent =  profile.MATRICULE;
 
-                    const table = document.getElementById('habilitationTable');
-                    profile.habilitations.forEach((habilitation, index) => {
+                    const table = document.getElementById('Habilitation');
+                    profile.habilitations.forEach((Habilitation, index) => {
                         const newRow = table.insertRow();
                         const cell1 = newRow.insertCell(0);
                         const cell2 = newRow.insertCell(1);
