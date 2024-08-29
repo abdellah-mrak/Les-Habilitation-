@@ -301,7 +301,7 @@
                         }
                     });
 
-                    if (profile.matricule) {
+                     
                         document.getElementById('NomPrénom').textContent = profile.nomPrenom;
                         document.getElementById('Tel').textContent = profile.tel;
                         document.getElementById('Matricule').textContent = profile.matricule;
@@ -314,10 +314,7 @@
 
                             cell1.textContent = index + 1;
                             cell2.textContent = habilitation.trim();
-                        });
-                    } else {
-                        alert('No profile found for the given matricule.');
-                    }
+                    
                 });
         }
 
