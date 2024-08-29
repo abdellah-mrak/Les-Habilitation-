@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بيانات Google Sheets</title>
+    <title>بيانات من Google Sheets</title>
 </head>
 <body>
     <h1>بيانات من Google Sheets</h1>
@@ -11,7 +11,7 @@
         <thead>
             <tr>
                 <th>Matricule</th>
-                <th>NomPrénom</th>
+                <th>Date</th>
                 <th>Tel</th>
                 <th>Habilitation</th>
             </tr>
@@ -23,7 +23,7 @@
 
     <script>
         // رابط CSV المنشور من Google Sheets
-        const csvUrl = 'https://docs.google.com/spreadsheets/d/12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY/pub?gid=1526610779&single=true&output=csv';
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/13j-_0Z7BVrXv7w4qQczYq3TYCtzkXC_aiFLFjJnioko/pub?gid=0&single=true&output=csv';
 
         // دالة لجلب بيانات CSV
         async function fetchCSVData(url) {
@@ -58,14 +58,12 @@
             tableBody.innerHTML = '';
 
             data.forEach(row => {
-                const habilitationValue = row['Habilitation'].trim() !== '' ? row['Habilitation'] : 'لا توجد بيانات';
-
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
                     <td>${row['Matricule'] || 'N/A'}</td>
-                    <td>${row['NomPrénom'] || 'N/A'}</td>
+                    <td>${row['Date'] || 'N/A'}</td>
                     <td>${row['Tel'] || 'N/A'}</td>
-                    <td>${habilitationValue}</td>
+                    <td>${row['Habilitation'] || 'N/A'}</td>
                 `;
                 tableBody.appendChild(tr);
             });
