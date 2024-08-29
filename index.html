@@ -173,29 +173,29 @@
             <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
             <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
             <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
-            <a href="#" data-title="COMBATTANT DE FEU EPI" data-header="COMBATTANT DE FEU EPI">COMBATTANT DE FEU EPI</a>
+            <a href="#" data-title="Pose et dépose d'isolant amiante" data-header="Pose et dépose d'isolant amiante">Pose et dépose d'isolant amiante</a>
+            <a href="#" data-title="Travail en espaces confinés" data-header="Travail en espaces confinés">Travail en espaces confinés</a>
         </nav>
 
-        <!-- الجدول -->
+        <!-- Table à remplir avec les données -->
         <div class="table-container">
-            <table id="habilitationsTable">
+            <h2 id="tableHeader"></h2>
+            <table>
                 <thead>
                     <tr>
-                        <th id="tableHeader">Habilitation</th>
+                        <th>Habilitation</th>
                         <th>Tel</th>
                         <th>NomPrénom</th>
                         <th>Matricule</th>
                     </tr>
                 </thead>
                 <tbody id="tableBody">
-                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // Données de connexion
         const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
         const validPassword = 'Abde@2006';
 
@@ -210,59 +210,56 @@
 
             if (email === validEmail && password === validPassword) {
                 document.getElementById('loginContainer').style.display = 'none';
-                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+                document.querySelector('.container').style.display = 'block';
             } else {
-                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
+                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
             }
         }
 
         function logout() {
-            location.reload(); // Recharger la page pour afficher le formulaire de connexion
+            location.reload();
         }
 
-        // Afficher le formulaire de connexion au chargement de la page
-        window.onload = showLogin;
+        window.onload = function() {
+            showLogin();
 
-        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
-        document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const title = this.getAttribute('data-title');
-                const header = this.getAttribute('data-header');
+            // Initialize Tabletop and load data from Google Sheets
+            Tabletop.init({
+                key: 'https://docs.google.com/spreadsheets/d/12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY/edit?gid=1526610779',
+                simpleSheet: true,
+                callback: function(data) {
+                    populateTable(data);
+                }
+            });
+        }
 
-                document.title = title;
-                document.getElementById('tableHeader').innerText = header;
+        function populateTable(data) {
+            const menuLinks = document.querySelectorAll('.menu a');
+            const tableBody = document.getElementById('tableBody');
 
-                document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const header = this.getAttribute('data-header');
+                    document.getElementById('tableHeader').innerText = header;
 
-                const tableBody = document.getElementById('tableBody');
-                tableBody.innerHTML = '';
+                    document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
 
-                (data[header] || []).forEach(row => {
-                    const tr = document.createElement('tr');
-                    row.forEach(cell => {
-                        const td = document.createElement('td');
-                        td.textContent = cell;
-                        tr.appendChild(td);
+                    tableBody.innerHTML = '';
+
+                    const filteredData = data.filter(row => row.Habilitation === header);
+                    filteredData.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `<td>${row.Habilitation}</td><td>${row.Tel}</td><td>${row.NomPrénom}</td><td>${row.Matricule}</td>`;
+                        tableBody.appendChild(tr);
                     });
-                    tableBody.appendChild(tr);
                 });
             });
-        });
 
-        document.querySelector('.menu a[data-title="Accueil"]').click();
-    </script>
-    
-</body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afficher Données de Google Sheets</title>
-    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
-</head>
+            // Automatically click on the first menu item to display initial data
+            document.querySelector('.menu a[data-title="Accueil"]').click();
+        }
     </script>
 </body>
 </html>
