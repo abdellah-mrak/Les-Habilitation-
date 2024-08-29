@@ -279,7 +279,7 @@
                 let profile = {};
                 rows.forEach(row => {
                     const columns = row.split(/,(?![^"]"(?:(?:[^"]"){2})[^"]$)/);
-                    if (columns.length >= 4 && columns[0] === matricule) { // Check if Matricule matches
+                    if (columns.length >= 5 && columns[1] === matricule) { // Check if Matricule matches
                         profile = {
                             Matricule: columns[1],
                             NomPrenom: columns[2],
@@ -289,7 +289,7 @@
                     }
                 });
 
-                if (profile.MATRICULE) {
+                if (MATRICULE) {
                     document.getElementById('NomPrénom').textContent = profile.NomPrenom;
                     document.getElementById('Tel').textContent = profile.Tel;
                     document.getElementById('MATRICULE').textContent =  profile.MATRICULE;
@@ -297,8 +297,8 @@
                     const table = document.getElementById('Habilitation');
                     profile.habilitations.forEach((Habilitation, index) => {
                         const newRow = table.insertRow();
-                        const cell1 = newRow.insertCell(0);
-                        const cell2 = newRow.insertCell(1);
+                        const cell1 = newRow.insertCell(1);
+                        const cell2 = newRow.insertCell(2);
 
                         cell1.textContent = index + 1;
                         cell2.textContent = habilitation.trim();
