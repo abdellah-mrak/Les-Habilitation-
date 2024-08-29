@@ -7,7 +7,121 @@
     <link rel="stylesheet" href="style.css">
     <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
     <style>
-        /* نفس CSS الذي قدمته */
+        body {  
+            margin: 0;
+            padding: 0;
+            background-image: url('WhatsApp Image 2024-08-23 at 11.03.52_06203d5a.jpg');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+            font-family: Arial, sans-serif;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            display: none; /* Masquer le contenu par défaut */
+        }
+
+        .search-bar {
+            margin: 20px 0;
+        }
+
+        .menu {
+            display: flex;
+            overflow-x: auto; /* Ajouter le défilement horizontal */
+            white-space: nowrap; /* Empêcher le retour à la ligne */
+            gap: 10px; /* Espacement entre les éléments */
+            padding: 10px 0; /* Espacement en haut et en bas */
+        }
+
+        .menu a {
+            text-decoration: none;
+            color: white;
+            background-color: #007bff;
+            padding: 10px 20px;
+            border-radius: 5px;
+            display: inline-block; /* Changer de block à inline-block */
+            flex: 0 0 auto; /* Empêcher les éléments de s'étirer */
+            text-align: center;
+        }
+
+        .menu a.active {
+            background-color: #0056b3;
+        }
+
+        .table-container {
+            text-align: center;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background-color: white;
+        }
+
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #27df4f;
+        }
+
+        /* Style pour le formulaire de connexion */
+        .login-container {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            display: block; /* Afficher le formulaire par défaut */
+        }
+
+        .login-container input {
+            display: block;
+            width: 100%;
+            margin: 10px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        .login-container button {
+            width: 100%;
+            padding: 10px;
+            background-color: #007bff;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .login-container button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Style pour le bouton de déconnexion */
+        .logout-button {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            padding: 10px 20px;
+            background-color: #ff0000;
+            border: none;
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .logout-button:hover {
+            background-color: #0056b3;
+        }
     </style>
 </head>
 <body>
@@ -31,7 +145,35 @@
 
         <!-- القائمة -->
         <nav class="menu">
-            <!-- الروابط كما هي -->
+            <a href="#" data-title="Accueil" data-header="Habilitation">Accueil</a>
+            <a href="#" data-title="CONDUCTEUR ENGINS" data-header="CONDUCTEUR ENGINS">CONDUCTEUR ENGINS</a>
+            <a href="#" data-title="Inspecteur outillage" data-header="Inspecteur outillage">Inspecteur outillage</a>
+            <a href="#" data-title="Réception Echafaudage" data-header="Réception Echafaudage">Réception Echafaudage</a>
+            <a href="#" data-title="Personnes autorisées à accéder à la tour" data-header="Personnes autorisées à accéder à la tour">Personnes autorisées à accéder à la tour</a>
+            <a href="#" data-title="Signaleur" data-header="Signaleur">Signaleur</a>
+            <a href="#" data-title="Chef de manœuvre" data-header="Chef de manœuvre">Chef de manœuvre</a>
+            <a href="#" data-title="élingeur" data-header="élingeur">élingeur</a>
+            <a href="#" data-title="Emetteur de permis de levage" data-header="Emetteur de permis de levage">Emetteur de permis de levage</a>
+            <a href="#" data-title="Chargé de consignation" data-header="Chargé de consignation">Chargé de consignation</a>
+            <a href="#" data-title="Porteur de cadenas" data-header="Porteur de cadenas">Porteur de cadenas</a>
+            <a href="#" data-title="Personnes autorisées à travailler en hauteur" data-header="Personnes autorisées à travailler en hauteur">Personnes autorisées à travailler en hauteur</a>
+            <a href="#" data-title="Emetteur de permis WAH" data-header="Emetteur de permis WAH">Emetteur de permis WAH</a>
+            <a href="#" data-title="Emetteur de permis travail à chaud" data-header="Emetteur de permis travail à chaud">Emetteur de permis travail à chaud</a>
+            <a href="#" data-title="Emetteur de permis EC" data-header="Emetteur de permis EC">Emetteur de permis EC</a>
+            <a href="#" data-title="Employé autorisé à travailler à chaud" data-header="Employé autorisé à travailler à chaud">Employé autorisé à travailler à chaud</a>
+            <a href="#" data-title="Entrant et surveillant EC" data-header="Entrant et surveillant EC">Entrant et surveillant EC</a>
+            <a href="#" data-title="Habilitation ATEX niveau 0" data-header="Habilitation ATEX niveau 0">Habilitation ATEX niveau 0</a>
+            <a href="#" data-title="AMBULANCIER" data-header="AMBULANCIER">AMBULANCIER</a>
+            <a href="#" data-title="CONDUITE CHARIOT ELEVATEUR" data-header="CONDUITE CHARIOT ELEVATEUR">CONDUITE CHARIOT ELEVATEUR</a>
+            <a href="#" data-title="CONDUITE NACELLE/PEMP" data-header="CONDUITE NACELLE/PEMP">CONDUITE NACELLE/PEMP</a>
+            <a href="#" data-title="SAUVETAGE EN HAUTEUR ET PROFONDEUR" data-header="SAUVETAGE EN HAUTEUR ET PROFONDEUR">SAUVETAGE EN HAUTEUR ET PROFONDEUR</a>
+            <a href="#" data-title="Montage et démontage Echafaudage" data-header="Montage et démontage Echafaudage">Montage et démontage Echafaudage</a>
+            <a href="#" data-title="Habilitation electrique pour électricien" data-header="Habilitation electrique pour électricien">Habilitation electrique pour électricien</a>
+            <a href="#" data-title="Habilitation electrique pour non electricien" data-header="Habilitation electrique pour non electricien">Habilitation electrique pour non electricien</a>
+            <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
+            <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
+            <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
+            <a href="#" data-title="COMBATTANT DE FEU EPI" data-header="COMBATTANT DE FEU EPI">COMBATTANT DE FEU EPI</a>
         </nav>
 
         <!-- الجدول -->
@@ -81,7 +223,7 @@
         // Afficher le formulaire de connexion au chargement de la page
         window.onload = showLogin;
 
-        // Code pour la gestion des clics على الروابط في القائمة وتحديث الجدول
+        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
         document.querySelectorAll('.menu a').forEach(link => {
             link.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -112,6 +254,16 @@
         document.querySelector('.menu a[data-title="Accueil"]').click();
     </script>
     
-    <script src="fetchData.js"></script>
+</body>
+    <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Afficher Données de Google Sheets</title>
+    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
+</head>
+    </script><script src="fetchData.js"></script>
+
 </body>
 </html>
