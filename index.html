@@ -1,101 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>عرض البيانات</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-        }
-
-        table {
-            width: 80%;
-            margin: 20px auto;
-            border-collapse: collapse;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #4CAF50;
-            color: white;
-        }
-
-        input[type="text"] {
-            width: 40%;
-            padding: 12px 20px;
-            margin: 20px 0;
-            box-sizing: border-box;
-            font-size: 16px;
-        }
-    </style>
+    <title>عرض بيانات جدول Google Sheets</title>
+    <link rel="stylesheet" href="style.css"> <!-- ربط بملف CSS خارجي -->
+    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script> <!-- مكتبة Tabletop لجلب البيانات -->
 </head>
 <body>
-    <h1>صفحة عرض البيانات</h1>
-    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Rechercher ici...">
-    <table id="dataTable">
-        <thead>
-            <tr>
-                <th>Habilitation</th>
-                <th>Tel</th>
-                <th>NomPrénom</th>
-                <th>Matricule</th>
-            </tr>
-        </thead>
-        <tbody>
-        </tbody>
-    </table>
+
+    <header>
+        <h1>صفحة عرض البيانات</h1>
+    </header>
+
+    <main>
+        <!-- الكود المضاف لعرض البيانات -->
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="....Rechercher ici">
+            </div>
+
+            <div class="table-container">
+                <table id="habilitationsTable">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>NomPrénom</th>
+                            <th>Tel</th>
+                            <th>Habilitation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- سيتم إضافة الصفوف هنا بواسطة JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </main>
+
     <footer>
-        <p>© 2024 موقعك. جميع الحقوق محفوظة.</p>
+        <p>&copy; 2024 موقعك. جميع الحقوق محفوظة.</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/Tabletop.js/1.5.1/tabletop.min.js"></script>
     <script>
         function init() {
             Tabletop.init({
-                key: 'https://docs.google.com/spreadsheets/d/13j-_0Z7BVrXv7w4qQczYq3TYCtzkXC_aiFLFjJnioko/pubhtml',
+                key: '13j-_0Z7BVrXv7w4qQczYq3TYCtzkXC_aiFLFjJnioko', // استبدل بـ "Spreadsheet Key" الخاص بك
+                simpleSheet: true,
                 callback: function(data, tabletop) {
-                    var tbody = document.querySelector("#dataTable tbody");
-                    data.forEach(function(item) {
-                        var row = tbody.insertRow();
-                        row.insertCell().textContent = item.Habilitation;
-                        row.insertCell().textContent = item.Tel;
-                        row.insertCell().textContent = item.NomPrénom;
-                        row.insertCell().textContent = item.Matricule;
+                    const tableBody = document.getElementById('tableBody');
+                    data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${row.Matricule}</td>
+                            <td>${row.NomPrénom}</td>
+                            <td>${row.Tel}</td>
+                            <td>${row.Habilitation}</td>
+                        `;
+                        tableBody.appendChild(tr);
                     });
-                },
-                simpleSheet: true
+                }
             });
         }
 
         window.addEventListener('DOMContentLoaded', init);
-
-        function searchTable() {
-            var input, filter, table, tr, td, i, j, txtValue;
-            input = document.getElementById("searchInput");
-            filter = input.value.toUpperCase();
-            table = document.getElementById("dataTable");
-            tr = table.getElementsByTagName("tr");
-            for (i = 1; i < tr.length; i++) {
-                tr[i].style.display = "none";
-                td = tr[i].getElementsByTagName("td");
-                for (j = 0; j < td.length; j++) {
-                    if (td[j]) {
-                        txtValue = td[j].textContent || td[j].innerText;
-                        if (txtValue.toUpperCase().indexOf(filter) > -1) {
-                            tr[i].style.display = "";
-                            break;
-                        }
-                    }
-                }
-            }
-        }
     </script>
+
 </body>
 </html>
-
