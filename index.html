@@ -274,25 +274,25 @@
             .then(data => {
                 const rows = data.split('\n').slice(1); // Skip the header row
                 const urlParams = new URLSearchParams(window.location.search);
-                const matricule = urlParams.get('matricule');
+                const matricule = urlParams.get('Matricule');
 
                 let profile = {};
                 rows.forEach(row => {
                     const columns = row.split(/,(?![^"]"(?:(?:[^"]"){2})[^"]$)/);
                     if (columns.length >= 4 && columns[0] === matricule) { // Check if Matricule matches
                         profile = {
-                            matricule: columns[0],
-                            nomPrenom: columns[1],
-                            tel: columns[2],
-                            habilitations: columns[3].split(','),
+                            Matricule: columns[0],
+                            NomPrenom: columns[1],
+                            Tel: columns[2],
+                            Habilitations: columns[3].split(','),
                         };
                     }
                 });
 
-                if (profile.matricule) {
-                    document.getElementById('NomPrénom').textContent = profile.nomPrenom;
-                    document.getElementById('Tel').textContent = profile.tel;
-                    document.getElementById('MATRICULE').textContent = profile.matricule;
+                if (profile.MATRICULE) {
+                    document.getElementById('NomPrénom').textContent = profile.NomPrenom;
+                    document.getElementById('Tel').textContent = profile.Tel;
+                    document.getElementById('MATRICULE').textContent =  profile.MATRICULE;
 
                     const table = document.getElementById('habilitationTable');
                     profile.habilitations.forEach((habilitation, index) => {
