@@ -1,283 +1,70 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ar">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة التأهيلات</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
-    <style>
-        body {  
-            margin: 0;
-            padding: 0;
-            background-image: url('WhatsApp Image 2024-08-23 at 11.03.52_06203d5a.jpg');
-            background-size: cover;
-            background-position: center;
-            background-repeat: no-repeat;
-            background-attachment: fixed;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            display: none; /* Masquer le contenu par défaut */
-        }
-
-        .search-bar {
-            margin: 20px 0;
-        }
-
-        .menu {
-            display: flex;
-            overflow-x: auto; /* Ajouter le défilement horizontal */
-            white-space: nowrap; /* Empêcher le retour à la ligne */
-            gap: 10px; /* Espacement entre les éléments */
-            padding: 10px 0; /* Espacement en haut et en bas */
-        }
-
-        .menu a {
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: inline-block; /* Changer de block à inline-block */
-            flex: 0 0 auto; /* Empêcher les éléments de s'étirer */
-            text-align: center;
-        }
-
-        .menu a.active {
-            background-color: #0056b3;
-        }
-
-        .table-container {
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #27df4f;
-        }
-
-        /* Style pour le formulaire de connexion */
-        .login-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: block; /* Afficher le formulaire par défaut */
-        }
-
-        .login-container input {
-            display: block;
-            width: 100%;
-            margin: 10px 0;
-            padding: 10px;
-            border: 1px solid #ddd;
-            border-radius: 5px;
-        }
-
-        .login-container button {
-            width: 100%;
-            padding: 10px;
-            background-color: #007bff;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .login-container button:hover {
-            background-color: #0056b3;
-        }
-
-        /* Style pour le bouton de déconnexion */
-        .logout-button {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #ff0000;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .logout-button:hover {
-            background-color: #0056b3;
-        }
-    </style>
+    <title>عرض بيانات جدول Google Sheets</title>
+    <link rel="stylesheet" href="style.css"> <!-- ربط بملف CSS خارجي -->
+    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script> <!-- مكتبة Tabletop لجلب البيانات -->
 </head>
 <body>
-    <!-- Bouton de déconnexion -->
-    <button class="logout-button" onclick="logout()">Déconnexion</button>
 
-    <!-- Formulaire de connexion -->
-    <div class="login-container" id="loginContainer">
-        <h2>Se connecter</h2>
-        <input type="email" id="email" placeholder="Adresse e-mail">
-        <input type="password" id="password" placeholder="Mot de passe">
-        <button onclick="login()">Se connecter</button>
-        <p id="loginMessage" style="color: red;"></p>
-    </div>
+    <header>
+        <h1>صفحة عرض البيانات</h1>
+    </header>
 
-    <div class="container">
-        <!-- شريط البحث -->
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="....Rechercher ici">
+    <main>
+        <!-- الكود المضاف لعرض البيانات -->
+        <div class="container">
+            <div class="search-bar">
+                <input type="text" id="searchInput" placeholder="....Rechercher ici">
+            </div>
+
+            <div class="table-container">
+                <table id="habilitationsTable">
+                    <thead>
+                        <tr>
+                            <th>Matricule</th>
+                            <th>NomPrénom</th>
+                            <th>Tel</th>
+                            <th>Habilitation</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tableBody">
+                        <!-- سيتم إضافة الصفوف هنا بواسطة JavaScript -->
+                    </tbody>
+                </table>
+            </div>
         </div>
+    </main>
 
-        <!-- القائمة -->
-         
-
-        <!-- الجدول -->
-        <div class="table-container">
-            <table id="habilitationsTable">
-                <thead>
-                    <tr>
-                        <th id="tableHeader">Habilitation</th>
-                        <th>Tel</th>
-                        <th>NomPrénom</th>
-                        <th>Matricule</th>
-                    </tr>
-                </thead>
-                <tbody id="tableBody">
-                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
-                </tbody>
-            </table>
-        </div>
-    </div>
+    <footer>
+        <p>&copy; 2024 موقعك. جميع الحقوق محفوظة.</p>
+    </footer>
 
     <script>
-        // Données de connexion
-        const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
-        const validPassword = 'Abde@2006';
-
-        function showLogin() {
-            document.getElementById('loginContainer').style.display = 'block';
-        }
-
-        function login() {
-            const email = document.getElementById('email').value;
-            const password = document.getElementById('password').value;
-            const message = document.getElementById('loginMessage');
-
-            if (email === validEmail && password === validPassword) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
-            } else {
-                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
-            }
-        }
-
-        function logout() {
-            location.reload(); // Recharger la page pour afficher le formulaire de connexion
-        }
-
-        // Afficher le formulaire de connexion au chargement de la page
-        window.onload = showLogin;
-
-        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
-        document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const title = this.getAttribute('data-title');
-                const header = this.getAttribute('data-header');
-
-                document.title = title;
-                document.getElementById('tableHeader').innerText = header;
-
-                document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
-
-                const tableBody = document.getElementById('tableBody');
-                tableBody.innerHTML = '';
-
-                (data[header] || []).forEach(row => {
-                    const tr = document.createElement('tr');
-                    row.forEach(cell => {
-                        const td = document.createElement('td');
-                        td.textContent = cell;
-                        tr.appendChild(td);
+        function init() {
+            Tabletop.init({
+                key: '12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY', // استبدل بـ "Spreadsheet Key" الخاص بك
+                simpleSheet: true,
+                callback: function(data, tabletop) {
+                    const tableBody = document.getElementById('tableBody');
+                    data.forEach(row => {
+                        const tr = document.createElement('tr');
+                        tr.innerHTML = `
+                            <td>${row.Matricule}</td>
+                            <td>${row.NomPrénom}</td>
+                            <td>${row.Tel}</td>
+                            <td>${row.Habilitation}</td>
+                        `;
+                        tableBody.appendChild(tr);
                     });
-                    tableBody.appendChild(tr);
-                });
-            });
-        });
-
-        document.querySelector('.menu a[data-title="Accueil"]').click();
-    </script>
-    
-</body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afficher Données de Google Sheets</title>
-    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
-</head>
-    </script>
-</body>
-</html>
- <script>
-    function loadProfile() {
-        const sheetURL = 'https://docs.google.com/spreadsheets/d/12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY/pub?gid=1526610779&single=true&output=csv';
-        fetch(sheetURL)
-            .then(response => response.text())
-            .then(data => {
-                const rows = data.split('\n').slice(1); // Skip the header row
-                const urlParams = new URLSearchParams(window.location.search);
-                const matricule = urlParams.get('Matricule');
-
-                let profile = {};
-                rows.forEach(row => {
-                    const columns = row.split(/,(?![^"]"(?:(?:[^"]"){2})[^"]$)/);
-                    if (columns.length >= 4 && columns[1] === matricule) { // Check if Matricule matches
-                        profile = {
-                            Matricule: columns[0],
-                            NomPrenom: columns[1],
-                            Tel: columns[2],
-                            Habilitations: columns[3],
-                        };
-                    }
-                });
-
-                  if (true){
-                    document.getElementById('NomPrénom').textContent = NomPrenom;
-                    document.getElementById('Tel').textContent =Tel;
-                    document.getElementById('MATRICULE').textContent = MATRICULE;
-
-                    const table = document.getElementById('Habilitation');
-                    profile.habilitations.forEach((Habilitation, index) => {
-                        const newRow = table.insertRow();
-                        const cell1 = newRow.insertCell(0);
-                        const cell2 = newRow.insertCell(1);
-
-                        cell1.textContent = index + 1;
-                        cell2.textContent = habilitation.trim();
-                    });
-                } else {
-                    alert('No profile found for the given matricule.');
                 }
             });
-    }
+        }
 
-    window.onload = loadProfile;
-</script>
+        window.addEventListener('DOMContentLoaded', init);
+    </script>
+
+</body>
+</html>
