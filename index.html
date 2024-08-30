@@ -3,266 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>إدارة التأهيلات</title>
-    <link rel="stylesheet" href="style.css">
-    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
+    <title>Connexion et Données de Google Sheets</title>
     <style>
-        body {  
+        body {
             margin: 0;
-            padding: 0;
-            background-image: url('WhatsApp Image 2024-08-23 at 11.03.52_06203d5a.jpg');
+            font-family: Arial, sans-serif;
+            background-image: url('images/WhatsApp Image 2024-08-23 at 11.03.53_3a5f4bde.jpg');
             background-size: cover;
             background-position: center;
             background-repeat: no-repeat;
-            background-attachment: fixed;
-            font-family: Arial, sans-serif;
-        }
-
-        .container {
-            width: 80%;
-            margin: auto;
-            display: none; /* Masquer le contenu par défaut */
-        }
-
-        .search-bar {
-            margin: 20px 0;
-        }
-
-        .menu {
+            overflow: hidden;
             display: flex;
-            overflow-x: auto; /* Ajouter le défilement horizontal */
-            white-space: nowrap; /* Empêcher le retour à la ligne */
-            gap: 10px; /* Espacement entre les éléments */
-            padding: 10px 0; /* Espacement en haut et en bas */
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
         }
 
-        .menu a {
-            text-decoration: none;
-            color: white;
-            background-color: #007bff;
-            padding: 10px 20px;
-            border-radius: 5px;
-            display: inline-block; /* Changer de block à inline-block */
-            flex: 0 0 auto; /* Empêcher les éléments de s'étirer */
-            text-align: center;
-        }
-
-        .menu a.active {
-            background-color: #0056b3;
-        }
-
-        .table-container {
-            text-align: center;
-        }
-
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background-color: white;
-        }
-
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #27df4f;
-        }
-
-        /* Style pour le formulaire de connexion */
-        .login-container {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
+        .login-container, .main-container {
             padding: 20px;
             border-radius: 10px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            display: block; /* Afficher le formulaire par défaut */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
         }
 
-        .login-container input {
-            display: block;
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.8);
+            width: 300px;
+        }
+
+        .login-container h2 {
+            margin-bottom: 20px;
+            color: #333;
+        }
+
+        .login-container input[type="email"],
+        .login-container input[type="password"] {
             width: 100%;
-            margin: 10px 0;
             padding: 10px;
+            margin-bottom: 20px;
             border: 1px solid #ddd;
             border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
         }
 
         .login-container button {
             width: 100%;
             padding: 10px;
-            background-color: #007bff;
-            border: none;
+            background-color: #4CAF50;
             color: white;
+            border: none;
             border-radius: 5px;
+            font-size: 16px;
             cursor: pointer;
         }
 
         .login-container button:hover {
-            background-color: #0056b3;
+            background-color: #45a049;
         }
 
-        /* Style pour le bouton de déconnexion */
+        .error-message {
+            color: red;
+            margin-bottom: 10px;
+        }
+
         .logout-button {
             position: absolute;
-            top: 20px;
-            right: 20px;
-            padding: 10px 20px;
-            background-color: #ff0000;
-            border: none;
+            top: 10px;
+            right: 10px;
+            background-color: red;
             color: white;
+            border: none;
             border-radius: 5px;
+            padding: 10px;
             cursor: pointer;
+            font-size: 14px;
         }
 
         .logout-button:hover {
-            background-color: #0056b3;
+            background-color: darkred;
+        }
+
+        .main-container {
+            display: none;
+            width: 80%;
+            height: 100%;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 230px;
+            background-color: rgba(255, 255, 255, 0); /* إزالة الخلفية البيضاء */
+        }
+
+        #search-input {
+            width: 80%;
+            padding: 10px;
+            margin-bottom: 20px;
+            font-size: 16px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        #table-container {
+            width: 80%;
+            height: 400px; /* تحديد ارتفاع الحاوية */
+            overflow-y: auto; /* تمكين التمرير العمودي فقط */
+            background-color: white; /* ارجاع لون الخلفية للابيض */
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            margin-bottom: 20px;
+            border-radius: 5px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: center;
+            border: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #4CAF50;
+            color: white;
+            position: sticky;
+            top: 0;
         }
     </style>
 </head>
 <body>
-    <!-- Bouton de déconnexion -->
-    <button class="logout-button" onclick="logout()">Déconnexion</button>
 
-    <!-- Formulaire de connexion -->
-    <div class="login-container" id="loginContainer">
-        <h2>Se connecter</h2>
-        <input type="email" id="email" placeholder="Adresse e-mail">
-        <input type="password" id="password" placeholder="Mot de passe">
+    <!-- زر إلغاء تسجيل الدخول -->
+    <button class="logout-button" id="logout-button" onclick="logout()" style="display: none;">Déconnexion</button>
+
+    <!-- واجهة تسجيل الدخول -->
+    <div class="login-container" id="login-container">
+        <h2>Connexion</h2>
+        <div class="error-message" id="error-message"></div>
+        <input type="email" id="email" placeholder="Adresse e-mail" required>
+        <input type="password" id="password" placeholder="Mot de passe" required>
         <button onclick="login()">Se connecter</button>
-        <p id="loginMessage" style="color: red;"></p>
     </div>
 
-    <div class="container">
-        <!-- شريط البحث -->
-        <div class="search-bar">
-            <input type="text" id="searchInput" placeholder="....Rechercher ici">
-        </div>
-
-        <!-- القائمة -->
-        <nav class="menu">
-            <a href="#" data-title="Accueil" data-header="Habilitation">Accueil</a>
-            <a href="#" data-title="CONDUCTEUR ENGINS" data-header="CONDUCTEUR ENGINS">CONDUCTEUR ENGINS</a>
-            <a href="#" data-title="Inspecteur outillage" data-header="Inspecteur outillage">Inspecteur outillage</a>
-            <a href="#" data-title="Réception Echafaudage" data-header="Réception Echafaudage">Réception Echafaudage</a>
-            <a href="#" data-title="Personnes autorisées à accéder à la tour" data-header="Personnes autorisées à accéder à la tour">Personnes autorisées à accéder à la tour</a>
-            <a href="#" data-title="Signaleur" data-header="Signaleur">Signaleur</a>
-            <a href="#" data-title="Chef de manœuvre" data-header="Chef de manœuvre">Chef de manœuvre</a>
-            <a href="#" data-title="élingeur" data-header="élingeur">élingeur</a>
-            <a href="#" data-title="Emetteur de permis de levage" data-header="Emetteur de permis de levage">Emetteur de permis de levage</a>
-            <a href="#" data-title="Chargé de consignation" data-header="Chargé de consignation">Chargé de consignation</a>
-            <a href="#" data-title="Porteur de cadenas" data-header="Porteur de cadenas">Porteur de cadenas</a>
-            <a href="#" data-title="Personnes autorisées à travailler en hauteur" data-header="Personnes autorisées à travailler en hauteur">Personnes autorisées à travailler en hauteur</a>
-            <a href="#" data-title="Emetteur de permis WAH" data-header="Emetteur de permis WAH">Emetteur de permis WAH</a>
-            <a href="#" data-title="Emetteur de permis travail à chaud" data-header="Emetteur de permis travail à chaud">Emetteur de permis travail à chaud</a>
-            <a href="#" data-title="Emetteur de permis EC" data-header="Emetteur de permis EC">Emetteur de permis EC</a>
-            <a href="#" data-title="Employé autorisé à travailler à chaud" data-header="Employé autorisé à travailler à chaud">Employé autorisé à travailler à chaud</a>
-            <a href="#" data-title="Entrant et surveillant EC" data-header="Entrant et surveillant EC">Entrant et surveillant EC</a>
-            <a href="#" data-title="Habilitation ATEX niveau 0" data-header="Habilitation ATEX niveau 0">Habilitation ATEX niveau 0</a>
-            <a href="#" data-title="AMBULANCIER" data-header="AMBULANCIER">AMBULANCIER</a>
-            <a href="#" data-title="CONDUITE CHARIOT ELEVATEUR" data-header="CONDUITE CHARIOT ELEVATEUR">CONDUITE CHARIOT ELEVATEUR</a>
-            <a href="#" data-title="CONDUITE NACELLE/PEMP" data-header="CONDUITE NACELLE/PEMP">CONDUITE NACELLE/PEMP</a>
-            <a href="#" data-title="SAUVETAGE EN HAUTEUR ET PROFONDEUR" data-header="SAUVETAGE EN HAUTEUR ET PROFONDEUR">SAUVETAGE EN HAUTEUR ET PROFONDEUR</a>
-            <a href="#" data-title="Montage et démontage Echafaudage" data-header="Montage et démontage Echafaudage">Montage et démontage Echafaudage</a>
-            <a href="#" data-title="Habilitation electrique pour électricien" data-header="Habilitation electrique pour électricien">Habilitation electrique pour électricien</a>
-            <a href="#" data-title="Habilitation electrique pour non electricien" data-header="Habilitation electrique pour non electricien">Habilitation electrique pour non electricien</a>
-            <a href="#" data-title="Serouriste" data-header="Serouriste">Serouriste</a>
-            <a href="#" data-title="Travail au voisnage d'une source radio active" data-header="Travail au voisnage d'une source radio active">Travail au voisnage d'une source radio active</a>
-            <a href="#" data-title="COMBATTANT DE FEU" data-header="COMBATTANT DE FEU">COMBATTANT DE FEU</a>
-            <a href="#" data-title="COMBATTANT DE FEU EPI" data-header="COMBATTANT DE FEU EPI">COMBATTANT DE FEU EPI</a>
-        </nav>
-
-        <!-- الجدول -->
-        <div class="table-container">
-            <table id="habilitationsTable">
+    <!-- الواجهة الرئيسية لعرض الجدول -->
+    <div class="main-container" id="main-container">
+        <input type="text" id="search-input" placeholder="Rechercher ici...">
+        <div id="table-container">
+            <table id="data-table" border="1">
                 <thead>
                     <tr>
-                        <th id="tableHeader">Habilitation</th>
-                        <th>Tel</th>
-                        <th>NomPrénom</th>
                         <th>Matricule</th>
+                        <th>NomPrénom</th>
+                        <th>Tel</th>
+                        <th>Habilitation</th>
                     </tr>
                 </thead>
-                <tbody id="tableBody">
-                    <!-- أضف المزيد من الصفوف حسب الحاجة -->
+                <tbody>
+                    <!-- البيانات سيتم إدراجها هنا -->
                 </tbody>
             </table>
         </div>
     </div>
 
     <script>
-        // Données de connexion
-        const validEmail = 'abdellah.m\'rak23@ump.ac.ma';
-        const validPassword = 'Abde@2006';
+        // معلومات تسجيل الدخول الصحيحة
+        const correctEmail = 'abdellah.m\'rak23@ump.ac.ma';
+        const correctPassword = 'abde2006';
 
-        function showLogin() {
-            document.getElementById('loginContainer').style.display = 'block';
-        }
+        // التحقق من حالة تسجيل الدخول عند تحميل الصفحة
+        document.addEventListener('DOMContentLoaded', function() {
+            if (localStorage.getItem('loggedIn') === 'true') {
+                showMainContainer();
+            }
+        });
 
+        // وظيفة تسجيل الدخول
         function login() {
             const email = document.getElementById('email').value;
             const password = document.getElementById('password').value;
-            const message = document.getElementById('loginMessage');
+            const errorMessage = document.getElementById('error-message');
 
-            if (email === validEmail && password === validPassword) {
-                document.getElementById('loginContainer').style.display = 'none';
-                document.querySelector('.container').style.display = 'block'; // Afficher le contenu du site après la connexion
+            if (email === correctEmail && password === correctPassword) {
+                localStorage.setItem('loggedIn', 'true');
+                showMainContainer();
             } else {
-                message.textContent = 'L\'adresse e-mail ou le mot de passe est incorrect';
+                errorMessage.textContent = 'Adresse e-mail ou mot de passe incorrect';
             }
         }
 
-        function logout() {
-            location.reload(); // Recharger la page pour afficher le formulaire de connexion
+        // إظهار الواجهة الرئيسية وإخفاء واجهة تسجيل الدخول
+        function showMainContainer() {
+            document.getElementById('login-container').style.display = 'none';
+            document.getElementById('main-container').style.display = 'flex';
+            document.getElementById('logout-button').style.display = 'block';
+
+            // تحميل البيانات وعرضها
+            loadAndDisplayData();
         }
 
-        // Afficher le formulaire de connexion au chargement de la page
-        window.onload = showLogin;
+        // وظيفة إلغاء تسجيل الدخول
+        function logout() {
+            localStorage.removeItem('loggedIn');
+            location.reload();
+        }
 
-        // Code pour la gestion des clics sur les éléments de menu et la mise à jour du tableau
-        document.querySelectorAll('.menu a').forEach(link => {
-            link.addEventListener('click', function(e) {
-                e.preventDefault();
-                const title = this.getAttribute('data-title');
-                const header = this.getAttribute('data-header');
+        const csvUrl = 'https://docs.google.com/spreadsheets/d/12sGG2la7TRlcLqMEWRmt0_dRmbwCGfN4S83Jl7RQ7qY/pub?gid=1526610779&single=true&output=csv';
 
-                document.title = title;
-                document.getElementById('tableHeader').innerText = header;
+        async function fetchCSVData(url) {
+            const response = await fetch(url);
+            const data = await response.text();
+            return data;
+        }
 
-                document.querySelectorAll('.menu a').forEach(a => a.classList.remove('active'));
-                this.classList.add('active');
+        function csvToJSON(csv) {
+            const lines = csv.trim().split("\n");
+            const headers = lines[0].split(",");
+            const result = [];
 
-                const tableBody = document.getElementById('tableBody');
-                tableBody.innerHTML = '';
+            for (let i = 1; i < lines.length; i++) {
+                const obj = {};
+                const currentline = lines[i].split(",");
 
-                (data[header] || []).forEach(row => {
-                    const tr = document.createElement('tr');
-                    row.forEach(cell => {
-                        const td = document.createElement('td');
-                        td.textContent = cell;
-                        tr.appendChild(td);
-                    });
-                    tableBody.appendChild(tr);
-                });
+                if (currentline.length === headers.length) {
+                    for (let j = 0; j < headers.length; j++) {
+                        obj[headers[j].trim()] = currentline[j].trim();
+                    }
+                    result.push(obj);
+                }
+            }
+            return result;
+        }
+
+        function renderTable(data) {
+            const tableBody = document.querySelector('#data-table tbody');
+            tableBody.innerHTML = '';
+
+            data.forEach(row => {
+                const habilitationValue = row['Habilitation'].trim() !== '' ? row['Habilitation'] : 'Aucune donnée';
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td>${row['Matricule'] || 'N/A'}</td>
+                    <td>${row['NomPrénom'] || 'N/A'}</td>
+                    <td>${row['Tel'] || 'N/A'}</td>
+                    <td>${habilitationValue}</td>
+                `;
+                tableBody.appendChild(tr);
             });
-        });
+        }
 
-        document.querySelector('.menu a[data-title="Accueil"]').click();
-    </script>
-    
-</body>
-    <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Afficher Données de Google Sheets</title>
-    <script src="https://cdn.jsdelivr.net/npm/tabletop@1.5.5/src/tabletop.min.js"></script>
-</head>
+        async function loadAndDisplayData() {
+            const csvData = await fetchCSVData(csvUrl);
+            const jsonData = csvToJSON(csvData);
+            renderTable(jsonData);
+
+            // إضافة حدث لتصفية البيانات أثناء الكتابة
+            const searchInput = document.getElementById('search-input');
+            searchInput.addEventListener('input', function () {
+                const searchTerm = searchInput.value.toLowerCase();
+                const filteredData = jsonData.filter(row => {
+                    return Object.values(row).some(val =>
+                        val.toLowerCase().includes(searchTerm)
+                    );
+                });
+                renderTable(filteredData);
+            });
+        }
     </script>
 </body>
 </html>
