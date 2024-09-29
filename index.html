@@ -156,8 +156,8 @@
                     <tr>
                         <th>NomPrénom</th>
                         <th>Matricule</th>
-                        <th>Habilitation</th>
                         <th>Tel</th>
+                        <th>Habilitation</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -245,8 +245,8 @@
 
                 const tr = document.createElement('tr');
                 tr.innerHTML = `
-                    <td>${row['Matricule'] || 'N/A'}</td>
                     <td>${row['NomPrénom'] || 'N/A'}</td>
+                    <td>${row['Matricule'] || 'N/A'}</td>
                     <td>${row['Tel'] || 'N/A'}</td>
                     <td>${habilitationValue}</td>
                 `;
